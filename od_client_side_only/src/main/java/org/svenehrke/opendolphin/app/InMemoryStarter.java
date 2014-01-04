@@ -13,8 +13,9 @@ public class InMemoryStarter {
 		Map<Integer, Class<? extends Application>> apps = new HashMap<>();
 
 		apps.put(1, App01.class);
+		apps.put(2, App02.class);
 
-		int appId = 1;
+		int appId = 2;
 
 		new InMemoryJavaFXDolphinStarter().start(apps.get(appId));
 

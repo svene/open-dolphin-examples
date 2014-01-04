@@ -32,6 +32,7 @@ public class App01 extends javafx.application.Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
+		// Construct client-side-only presentation model:
 		pm1 = new ClientPresentationModel(Constants.PM_1, Arrays.asList(new ClientAttribute(Constants.ATTR_1)));
 		pm1.setClientSideOnly(true);
 		clientDolphin.getModelStore().add(pm1);
