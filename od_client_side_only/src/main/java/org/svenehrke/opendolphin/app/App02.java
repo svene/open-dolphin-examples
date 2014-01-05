@@ -25,13 +25,12 @@ public class App02 extends javafx.application.Application {
 	private Button clientSideOnlyButton;
 	private Label label, label2;
 
-	private ClientPresentationModel pm1;
 	private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss.SSS a");
 
 	@Override
 	public void start(Stage stage) throws Exception {
 		// Construct client-side-only presentation model with helper method:
-		pm1 = ClientSideOnlyDolphin.presentationModel(Constants.PM_1, Constants.ATTR_1);
+		ClientPresentationModel pm1 = ClientSideOnlyDolphin.presentationModel(Constants.PM_1, Constants.ATTR_1);
 
 		Pane root = setupStage();
 

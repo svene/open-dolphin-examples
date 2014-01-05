@@ -25,22 +25,21 @@ public class App03 extends javafx.application.Application {
 	private Button clientSideOnlyButton;
 	private Label label, label2, label3;
 
-	private ClientPresentationModel pm1, pm2, pm3;
 	private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss.SSS a");
 
 	@Override
 	public void start(Stage stage) throws Exception {
 		// Construct client-side-only presentation model with helper method:
 		ClientAttribute attr1 = new ClientAttribute(Constants.ATTR_1, null, Constants.QUALIFIER_1);
-		pm1 = ClientSideOnlyDolphin.presentationModel(Constants.PM_1, attr1);
+		ClientPresentationModel pm1 = ClientSideOnlyDolphin.presentationModel(Constants.PM_1, attr1);
 
 		// new Attribute but same qualifier which connects both attributes without explicit binding:
 		ClientAttribute attr2 = new ClientAttribute(Constants.ATTR_2, null, Constants.QUALIFIER_1);
-		pm2 = ClientSideOnlyDolphin.presentationModel(Constants.PM_2, attr2);
+		ClientPresentationModel pm2 = ClientSideOnlyDolphin.presentationModel(Constants.PM_2, attr2);
 
 		// new Attribute but different qualifier means it is not connected to previous attributes:
 		ClientAttribute attr3 = new ClientAttribute(Constants.ATTR_3, null, Constants.QUALIFIER_2);
-		pm3 = ClientSideOnlyDolphin.presentationModel(Constants.PM_3, attr3);
+		ClientPresentationModel pm3 = ClientSideOnlyDolphin.presentationModel(Constants.PM_3, attr3);
 
 		Pane root = setupStage();
 
