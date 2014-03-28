@@ -9,8 +9,8 @@
     <script>
         require([ 'opendolphin' ], function (dol) {
             // Set up the dolphin for regular remote mode with the appropriate URL
-            // forcing a new session on page reload:
-            const dolphin = dol.dolphin("http://localhost:8080/odwebjee/dolphin", true);
+            // forcing a new session on page reload (see comments in 'DolphinInvalidateServlet.java'):
+            const dolphin = dol.dolphin(window.location + "/dolphin", true);
 
             // Make an attribute with name, no qualifier, and an empty String as initial value:
             const attribute = dolphin.attribute("myAttribute", undefined, "");
@@ -44,7 +44,7 @@
 </head>
 <body>
 
-<button id="myButton">MyButton</button>
+<button id="myButton">make string longer on server</button>
 
 <div id="myLabel">unchanged</div>
 
