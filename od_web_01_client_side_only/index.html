@@ -8,7 +8,7 @@
     <script>
         require([ 'opendolphin' ], function (dol) {
             // Set up the dolphin for client-side only mode (first parameter url is null)
-            // and not forcing a new session on load (irrelevant for client side only mode):
+            // and not forcing a new session on page reload (irrelevant for client side only mode):
             const dolphin = dol.dolphin(null, false);
 
             // make an attribute with name, no qualifier, and am empty String as initial value:
