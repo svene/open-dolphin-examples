@@ -1,7 +1,5 @@
-package com.airhacks.jee1;
+package org.opendolphin.odwebjee;
 
-import org.opendolphin.core.Attribute;
-import org.opendolphin.core.PresentationModel;
 import org.opendolphin.core.server.ServerAttribute;
 import org.opendolphin.core.server.ServerPresentationModel;
 import org.opendolphin.core.server.action.DolphinServerAction;
@@ -9,21 +7,27 @@ import org.opendolphin.core.server.comm.ActionRegistry;
 import org.opendolphin.core.server.comm.SimpleCommandHandler;
 
 /**
- *
- * @author sven
+ * Simple Action to demonstrate how a PM-attribute is modified and the
+ * change is immediately visible on the client.
  */
 public class MakeItLongerAction extends DolphinServerAction {
 
     @Override
-    public void registerIn(ActionRegistry ar) {
-        ar.register("makeItLonger", new SimpleCommandHandler() {
+    public void registerIn(ActionRegistry registry) {
+
+        // Register CommandHandler under the name 'makeItLonger':
+        registry.register("makeItLonger", new SimpleCommandHandler() {
  
             @Override
-            public void handleCommand() {
-                
+            public void handleCommand() {                
+                // Get a handle to the PM which was initially created by the client (see index.html):
                 ServerPresentationModel pm = getServerDolphin().getAt("myPM");
+                
+                // get the PM's attribute 'myAttribute':
                 final ServerAttribute at = pm.getAt("myAttribute");
-                changeValue(at, at.getValue() + " bla");
+                
+                // Change the value of the attribute. change is immediately visible on the client: 
+                changeValue(at, at.getValue() + " longer");
             }
         });
 
