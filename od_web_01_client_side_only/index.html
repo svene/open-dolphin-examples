@@ -8,7 +8,7 @@
     <script>
         require([ 'opendolphin' ], function (dol) {
             // Set up the dolphin for client-side only mode (first parameter url is null)
-            // and not forcing a new session on load (irrelevant for client side only):
+            // and not forcing a new session on load (irrelevant for client side only mode):
             const dolphin = dol.dolphin(null, false);
 
             // make an attribute with name, no qualifier, and am empty String as initial value:
@@ -28,7 +28,7 @@
             // on button click change value of attribute, which causes the bound 'myLabel' to change:
             const myButton = document.getElementById("myButton");
             myButton.onclick = function () {
-                attribute.setValue(attribute.getValue() + ' bla');
+                attribute.setValue(attribute.getValue() + ' longer');
             };
 
         });
@@ -38,7 +38,7 @@
 </head>
 <body>
 
-<button id="myButton">MyButton</button>
+<button id="myButton">make string longer</button>
 
 <div id="myLabel">unchanged</div>
 
