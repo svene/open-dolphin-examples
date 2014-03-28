@@ -11,21 +11,21 @@
             // and not forcing a new session on page reload (irrelevant for client side only mode):
             const dolphin = dol.dolphin(null, false);
 
-            // make an attribute with name, no qualifier, and am empty String as initial value:
+            // Make an attribute with name, no qualifier, and an empty String as initial value:
             const attribute = dolphin.attribute("myAttribute", undefined, "");
 
             // ... and put it into a presentation model with id 'myPM' and no type
             var pm = dolphin.presentationModel("myPM", undefined, attribute);
 
 
-            // bind value of attribute to value of myLabel:
+            // Bind value of attribute to value of myLabel:
             const myLabel  = document.getElementById("myLabel");
             attribute.onValueChange(function (event) {
                 myLabel.innerHTML = event.newValue;
             });
 
 
-            // on button click change value of attribute, which causes the bound 'myLabel' to change:
+            // On button click change the value of the attribute, which causes the bound 'myLabel' to change:
             const myButton = document.getElementById("myButton");
             myButton.onclick = function () {
                 attribute.setValue(attribute.getValue() + ' longer');
