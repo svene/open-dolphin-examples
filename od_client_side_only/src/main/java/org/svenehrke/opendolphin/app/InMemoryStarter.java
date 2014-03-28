@@ -1,7 +1,7 @@
 package org.svenehrke.opendolphin.app;
 
 import javafx.application.Application;
-import org.opendolphin.extension.InMemoryJavaFXDolphinStarter;
+import org.opendolphinx.extension.InMemoryJavaFXDolphinStarter;
 
 import java.util.HashMap;
 import java.util.Map;

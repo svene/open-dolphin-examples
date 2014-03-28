@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.opendolphin.binding.JFXBinder;
 import org.opendolphin.core.client.ClientAttribute;
@@ -16,7 +17,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
-import static org.opendolphin.extension.javafxclient.JavaFXApplicationParameters.clientDolphin;
+import static org.opendolphinx.extension.javafxclient.JavaFXApplicationParameters.clientDolphin;
 
 /**
  * Binds one attribute to two labels.
@@ -45,7 +46,8 @@ public class App01 extends javafx.application.Application {
 
 		pm1.getAt(Constants.ATTR_1).setValue("-");
 
-		stage.setScene(new Scene(root, 300, 300));
+		Scene scene = new Scene(root, 300, 300, Color.DODGERBLUE);
+		stage.setScene(scene);
 		stage.setTitle(getClass().getSimpleName());
 		stage.show();
 

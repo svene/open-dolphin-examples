@@ -10,7 +10,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.opendolphin.binding.JFXBinder;
 import org.opendolphin.core.client.ClientPresentationModel;
-import org.svenehrke.opendolphin.common.ClientSideOnlyDolphin;
+import org.opendolphinx.extension.client.ClientSideOnlyDolphin;
+import org.opendolphinx.extension.javafxclient.JavaFXApplicationParameters;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +31,7 @@ public class App02 extends javafx.application.Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		// Construct client-side-only presentation model with helper method:
-		ClientPresentationModel pm1 = ClientSideOnlyDolphin.presentationModel(Constants.PM_1, Constants.ATTR_1);
+		ClientPresentationModel pm1 = new ClientSideOnlyDolphin(JavaFXApplicationParameters.clientDolphin).presentationModel(Constants.PM_1, Constants.ATTR_1);
 
 		Pane root = setupStage();
 
