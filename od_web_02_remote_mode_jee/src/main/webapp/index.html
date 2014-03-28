@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <!-- refer to OpenDolphin, see also http://open-dolphin.org/dolphin_website/Download.html -->
+    <script data-main="js/dolphin/" src="libs/require.js"></script>
+
+    
+    <script>
+        require([ 'opendolphin' ], function (dol) {
+            // setting up the dolphin for a null url and not forcing a new session on load
+//            const dolphin = dol.dolphin(null, false);
+            const dolphin = dol.dolphin("http://localhost:8080/jeeapp1/dolphin", true);
+
+            // create a presentation model
+
+            // make an attribute with name, qualifier, and initial value
+            const attribute = dolphin.attribute("myAttribute", undefined, "");
+            // and put it into a presentation model with no id and no type
+//            var pm = dolphin.presentationModel(undefined, undefined, attribute);
+            var pm = dolphin.presentationModel("myPM", undefined, attribute);
+
+
+            // do the binding
+
+            // hold onto the html element to bind against
+            const myLabel  = document.getElementById("myLabel");
+
+            // bind value of attribute to value of myLabel
+            attribute.onValueChange(function (event) {
+                myLabel.innerHTML = event.newValue;
+            });
+
+            //..
+            const myButton = document.getElementById("myButton");
+            myButton.onclick = function () {
+                //attribute.setValue(attribute.getValue() + ' bla');
+                dolphin.send("makeItLonger");
+            };
+
+        });
+    </script>
+
+
+</head>
+<body>
+
+<button id="myButton">MyButton</button>
+
+<div id="myLabel">unchanged</div>
+
+
+
+</body>
+</html>
