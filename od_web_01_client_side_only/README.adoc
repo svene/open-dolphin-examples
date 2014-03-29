@@ -1,5 +1,5 @@
 
-= Simplest HTML based Open-Dolphin Example Application
+= Simple HTML based Open-Dolphin Example Application
 
 This is a very simple HTML Open-Dolphin Application to show you how to get started with the HTML/Javascript based
 Open-Dolphin Client. It consists of only a couple of files:

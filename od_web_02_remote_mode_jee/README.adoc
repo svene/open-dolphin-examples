@@ -5,13 +5,13 @@ In contrast to the first example application this one connects to a JEE based se
 Again it is very simple and focuses on the parts you need to provide to make
 the browser talk to the application on the server.
 
-Note that you implement the server part with other frameworks like Grails for example but since this is
+Note that you can implement the server part with other frameworks like Grails for example but since this is
 shown already with the demos coming with open-dolphin I decided to take a JEE based approach (you need at least JEE6 support for this example).
 
 First you need a servlet which inherits from DolphinServlet. In the first example application the text of the label was extended in the browser.
 In this example this should happen on the server side because this is real business logic and therefore belongs on the server :-)
 So when the button in the browser is clicked a command 'makeItLonger' should be sent to the server which in turn extends the value of the PM's attribute.
-Since open-dolphin always keeps the PMs of the client and server in sync (so called shared presentation models) the change will be immediately visible
+Since open-dolphin always keeps the PMs of the client and server in sync (so called shared presentation models) the change will be visible immediately
 on the client. Note that we do not have to program anything to make this happen.
 
 Here is the servlet which registers our single action:
