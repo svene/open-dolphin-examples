@@ -1,0 +1,37 @@
+
+= Simplest HTML based Open-Dolphin Example Application
+
+This is a very simple HTML Open-Dolphin Application to show you how to get started with the HTML/Javascript based
+Open-Dolphin Client. It consists of only a couple of files:
+
+----
+.
+├── index.html
+├── js
+│   └── dolphin
+│       └── opendolphin.js
+└── libs
+    └── require.js
+----
+
+Note that this example works in client-side only mode. Usually open-dolphin applications operate together
+with a server but to get started I think it is simpler to learn in small steps.
+
+== Run it
+* Simply clone this repository
+* in a browser open the file 'index.html'
+* You should see a white page with just one button 'make string longer'.
+* Click on the button once and below the button a label with the text 'longer' should appear.
+* Each time you click on the button this label should become longer: 'longer longer longer...'
+
+Check out the comments in index.html to see how the label is bound to a presentation model's attribute.
+
+Of course this example is not very exciting but this is on purpose for an easy start.
+The next example https://github.com/svene/open-dolphin-examples/tree/master/od_web_02_remote_mode_jee[od_web_02_remote_mode_jee] will demonstrate how to connect this simple
+example to a server.
+
+For detailed documentation see the http://www.open-dolphin.org[Open Dolphin Webpage].
+
+== Additional notes
+I downloaded the files 'opendolphin.js' (version 0.9) and 'require.js' from the https://klondike.canoo.com/dolphin-grails/demo/js/teammember/TeamMemberDetails.html[TeamMember Demo]
+and kept the folder structure.
