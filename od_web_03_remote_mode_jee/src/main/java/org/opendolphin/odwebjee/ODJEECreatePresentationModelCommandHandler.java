@@ -14,18 +14,21 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * From OpenDolphin's CreatePresentationModelAction.groovy
+ */
 @Singleton
-public class ODJEECreatePresentationModelCommandHandler implements ODJEEAction {
+@SuppressWarnings("unused")
+public class ODJEECreatePresentationModelCommandHandler implements ODJEECommandHandler {
 
 	@Inject
-	ODJEEModelStore modelStore;
+	ODJEEModelStoreHolder modelStore;
 
 	public void consumeCommand(@Observes ODJEECommandEvent event) {
 		Command cmd = event.getCommand();
 		String id = cmd.getId();
 		if (!"CreatePresentationModel".equals(id)) return;
 		CreatePresentationModelCommand command = (CreatePresentationModelCommand) cmd;
-		System.out.println("MakeItLongerAction.consumeCommand");
 
 		List<ServerAttribute> attributes = new LinkedList();
 		for (Map<String, Object> attr : command.getAttributes()) {

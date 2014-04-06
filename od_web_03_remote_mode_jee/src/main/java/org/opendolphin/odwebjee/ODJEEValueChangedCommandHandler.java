@@ -9,11 +9,14 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 
-@Singleton
-public class ODJEEValueChangedCommandHandler implements ODJEEAction {
+/**
+ * From OpenDolphin's ValueChangedAction.groovy
+ */@Singleton
+@SuppressWarnings("unused")
+public class ODJEEValueChangedCommandHandler implements ODJEECommandHandler {
 
 	@Inject
-	ODJEEModelStore modelStore;
+	ODJEEModelStoreHolder modelStore;
 
 	public void consumeCommand(@Observes ODJEECommandEvent event) {
 		Command cmd = event.getCommand();
@@ -29,7 +32,7 @@ public class ODJEEValueChangedCommandHandler implements ODJEEAction {
 //				"Known attribute ids are: "+ serverDolphin.serverModelStore.listPresentationModels()*.attributes*.id )
 			System.out.println("cannot find attribute with id $command.attributeId to change value from '" +
 				command.getOldValue() + "' to '" + command.getNewValue() + "'. "
-//				+ "Known attribute ids are: "+ modelStore.getModelStore().listPresentationModels()*.attributes*.id
+//				+ "Known attribute ids are: "+ modelStoreHolder.getModelStore().listPresentationModels()*.attributes*.id
 			);
 		}
 

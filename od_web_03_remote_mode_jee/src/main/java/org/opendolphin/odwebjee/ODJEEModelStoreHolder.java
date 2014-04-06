@@ -6,7 +6,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
 @SessionScoped
-public class ODJEEModelStore implements Serializable {
+public class ODJEEModelStoreHolder implements Serializable {
 
 	ModelStore modelStore = new ModelStore();
 
