@@ -20,8 +20,6 @@ public class ODJEEValueChangedCommandHandler implements ODJEECommandHandler {
 
 	public void consumeCommand(@Observes ODJEECommandEvent event) {
 		Command cmd = event.getCommand();
-		String id = cmd.getId();
-		if (!"ValueChanged".equals(id)) return;
 		ValueChangedCommand command = (ValueChangedCommand) cmd;
 
 		Attribute attribute = modelStore.getModelStore().findAttributeById(command.getAttributeId());
@@ -37,4 +35,10 @@ public class ODJEEValueChangedCommandHandler implements ODJEECommandHandler {
 		}
 
 
-	}}
+	}
+
+	@Override
+	public void handleCommand(ODJEECommandEvent commandEvent) {
+		consumeCommand(commandEvent);
+	}
+}

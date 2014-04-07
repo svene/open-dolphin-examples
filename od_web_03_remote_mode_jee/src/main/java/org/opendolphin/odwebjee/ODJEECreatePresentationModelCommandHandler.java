@@ -18,7 +18,7 @@ import java.util.Map;
  * From OpenDolphin's CreatePresentationModelAction.groovy
  */
 @Singleton
-@SuppressWarnings("unused")
+//@SuppressWarnings("unused")
 public class ODJEECreatePresentationModelCommandHandler implements ODJEECommandHandler {
 
 	@Inject
@@ -26,8 +26,6 @@ public class ODJEECreatePresentationModelCommandHandler implements ODJEECommandH
 
 	public void consumeCommand(@Observes ODJEECommandEvent event) {
 		Command cmd = event.getCommand();
-		String id = cmd.getId();
-		if (!"CreatePresentationModel".equals(id)) return;
 		CreatePresentationModelCommand command = (CreatePresentationModelCommand) cmd;
 
 		List<ServerAttribute> attributes = new LinkedList();
@@ -42,4 +40,10 @@ public class ODJEECreatePresentationModelCommandHandler implements ODJEECommandH
 		model.setPresentationModelType(command.getPmType());
 		modelStore.getModelStore().add(model);
 		System.out.println("ODJEECreatePresentationModelAction.consumeCommand");
-	}}
+	}
+
+	@Override
+	public void handleCommand(ODJEECommandEvent commandEvent) {
+		consumeCommand(commandEvent);
+	}
+}

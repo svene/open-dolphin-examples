@@ -40,9 +40,6 @@ public class MyDolphinServlet extends HttpServlet {
 		for (ODJEECommandHandler commandHandler : commandHandlers) {
 			String commandHandlerName = commandHandler.getClass().getName();
 			System.out.println(commandHandlerName);
-			// here a map from commandHandlerName to ODJEECommandHandler could be initialized.
-			// but here the CDI event mechanism is used.
-			// TODO: show the map approach in a second demo
 			String name = commandHandler.getClass().getSimpleName()
 				.replace("ODJEE", "")
 				.replace("Command", "")
