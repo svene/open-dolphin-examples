@@ -1,15 +1,15 @@
-package org.opendolphin.odwebjee;
+package org.org.opendolphin.jee.server;
 
 import org.opendolphin.core.comm.Command;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ODJEECommandEvent {
-	List<Command> response = new ArrayList<>();
-	Command command;
+public class CommandEvent {
+	private List<Command> response = new ArrayList<>();
+	private Command command;
 
-	public ODJEECommandEvent(Command command) {
+	public CommandEvent(Command command) {
 		this.command = command;
 	}
 

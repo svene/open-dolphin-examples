@@ -1,4 +1,4 @@
-package org.opendolphin.odwebjee;
+package org.org.opendolphin.jee.server;
 
 import org.opendolphin.core.ModelStore;
 
@@ -6,7 +6,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
 @SessionScoped
-public class ODJEEModelStoreHolder implements Serializable {
+public class ModelStoreHolder implements Serializable {
 
 	ModelStore modelStore = new ModelStore();
 

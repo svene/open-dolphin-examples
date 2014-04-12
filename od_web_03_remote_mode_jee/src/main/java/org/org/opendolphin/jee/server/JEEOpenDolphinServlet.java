@@ -1,13 +1,9 @@
-package org.opendolphin.odwebjee;
+package org.org.opendolphin.jee.server;
 
 import org.opendolphin.core.comm.Codec;
 import org.opendolphin.core.comm.Command;
 import org.opendolphin.core.comm.JsonCodec;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.event.Event;
-import javax.enterprise.inject.Any;
-import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,37 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @WebServlet(urlPatterns = {"/dolphin"})
-public class MyDolphinServlet extends HttpServlet {
+public class JEEOpenDolphinServlet extends HttpServlet {
 
 	@Inject
-	ODJEEModelStoreHolder modelStoreHolder;
+	ModelStoreHolder modelStoreHolder;
 
 	@Inject
-	private Event<ODJEECommandEvent> commandEvent;
-
-	@Inject @Any
-	private Instance<ODJEECommandHandler> commandHandlers;
-
-	private Map<String, ODJEECommandHandler> commandHandlersByName = new HashMap<>();
-
-	@PostConstruct
-	void initialize() {
-		for (ODJEECommandHandler commandHandler : commandHandlers) {
-			String commandHandlerName = commandHandler.getClass().getName();
-			System.out.println(commandHandlerName);
-			String name = commandHandler.getClass().getSimpleName()
-				.replace("ODJEE", "")
-				.replace("Command", "")
-				.replace("Handler", "");
-			commandHandlersByName.put(name, commandHandler);
-
-		}
-	}
+	CommandHandlerRegistry commandHandlerRegistry;
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,14 +31,12 @@ public class MyDolphinServlet extends HttpServlet {
 		List<Command> commands = codec.decode(requestJson);
 		List<Command> results = new ArrayList<>();
 		for (Command command : commands) {
-			commandHandlers.select(ODJEECreatePresentationModelCommandHandler.class);
-			ODJEECommandEvent ce = new ODJEECommandEvent(command);
-//			commandEvent.fire(ce);
-			String name = command.getId();
-			name = name.substring(0, 1).toUpperCase() + name.substring(1);
-			ODJEECommandHandler commandHandler = commandHandlersByName.get(name);
-			commandHandler.handleCommand(ce);
-			results.addAll(ce.getResponse());
+			ICommandHandler commandHandler = commandHandlerRegistry.actionByKey(command.getId());
+			if (commandHandler != null) {
+				CommandEvent ce = new CommandEvent(command);
+				commandHandler.handleCommand(ce);
+				results.addAll(ce.getResponse());
+			}
 		}
 		String jsonResponse = codec.encode(results);
 		resp.setStatus(HttpServletResponse.SC_OK);

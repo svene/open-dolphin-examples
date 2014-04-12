@@ -1,4 +1,4 @@
-package org.opendolphin.odwebjee;
+package org.org.opendolphin.jee.server;
 
 import org.opendolphin.core.Tag;
 import org.opendolphin.core.comm.Command;
@@ -6,7 +6,6 @@ import org.opendolphin.core.comm.CreatePresentationModelCommand;
 import org.opendolphin.core.server.ServerAttribute;
 import org.opendolphin.core.server.ServerPresentationModel;
 
-import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.LinkedList;
@@ -18,14 +17,16 @@ import java.util.Map;
  * From OpenDolphin's CreatePresentationModelAction.groovy
  */
 @Singleton
-//@SuppressWarnings("unused")
-public class ODJEECreatePresentationModelCommandHandler implements ODJEECommandHandler {
+@CommandHandler("CreatePresentationModel")
+@SuppressWarnings("unused")
+public class ICreatePresentationModelCommandHandler implements ICommandHandler {
 
 	@Inject
-	ODJEEModelStoreHolder modelStore;
+	ModelStoreHolder modelStore;
 
-	public void consumeCommand(@Observes ODJEECommandEvent event) {
-		Command cmd = event.getCommand();
+	@Override
+	public void handleCommand(CommandEvent commandEvent) {
+		Command cmd = commandEvent.getCommand();
 		CreatePresentationModelCommand command = (CreatePresentationModelCommand) cmd;
 
 		List<ServerAttribute> attributes = new LinkedList();
@@ -40,10 +41,5 @@ public class ODJEECreatePresentationModelCommandHandler implements ODJEECommandH
 		model.setPresentationModelType(command.getPmType());
 		modelStore.getModelStore().add(model);
 		System.out.println("ODJEECreatePresentationModelAction.consumeCommand");
-	}
-
-	@Override
-	public void handleCommand(ODJEECommandEvent commandEvent) {
-		consumeCommand(commandEvent);
 	}
 }

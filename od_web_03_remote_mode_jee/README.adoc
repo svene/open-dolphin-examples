@@ -1,0 +1,4 @@
+
+== Third HTML based Open-Dolphin Example Application
+
+In contrast to the second example application this one ... TBD

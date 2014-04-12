@@ -1,25 +1,27 @@
-package org.opendolphin.odwebjee;
+package org.org.opendolphin.jee.server;
 
 import org.opendolphin.core.Attribute;
 import org.opendolphin.core.comm.Command;
 import org.opendolphin.core.comm.ValueChangedCommand;
 
-import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 
 /**
  * From OpenDolphin's ValueChangedAction.groovy
- */@Singleton
+ */
+@Singleton
+@CommandHandler("ValueChanged")
 @SuppressWarnings("unused")
-public class ODJEEValueChangedCommandHandler implements ODJEECommandHandler {
+public class IValueChangedCommandHandler implements ICommandHandler {
 
 	@Inject
-	ODJEEModelStoreHolder modelStore;
+	ModelStoreHolder modelStore;
 
-	public void consumeCommand(@Observes ODJEECommandEvent event) {
-		Command cmd = event.getCommand();
+	@Override
+	public void handleCommand(CommandEvent commandEvent) {
+		Command cmd = commandEvent.getCommand();
 		ValueChangedCommand command = (ValueChangedCommand) cmd;
 
 		Attribute attribute = modelStore.getModelStore().findAttributeById(command.getAttributeId());
@@ -35,10 +37,5 @@ public class ODJEEValueChangedCommandHandler implements ODJEECommandHandler {
 		}
 
 
-	}
-
-	@Override
-	public void handleCommand(ODJEECommandEvent commandEvent) {
-		consumeCommand(commandEvent);
 	}
 }
