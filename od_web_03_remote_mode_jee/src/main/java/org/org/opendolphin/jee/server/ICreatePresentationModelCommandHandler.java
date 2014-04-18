@@ -22,7 +22,7 @@ import java.util.Map;
 public class ICreatePresentationModelCommandHandler implements ICommandHandler {
 
 	@Inject
-	ModelStoreHolder modelStore;
+	ModelStoreHolder modelStoreHolder;
 
 	@Override
 	public void handleCommand(CommandEvent commandEvent) {
@@ -39,7 +39,7 @@ public class ICreatePresentationModelCommandHandler implements ICommandHandler {
 		}
 		ServerPresentationModel model = new ServerPresentationModel(command.getPmId(), attributes);
 		model.setPresentationModelType(command.getPmType());
-		modelStore.getModelStore().add(model);
+		modelStoreHolder.getModelStore().add(model);
 		System.out.println("ODJEECreatePresentationModelAction.consumeCommand");
 	}
 }
