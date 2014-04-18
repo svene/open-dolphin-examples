@@ -1,3 +1,5 @@
+<%@ page import="org.opendolphin.odwebjee.Constants" %>
+<%@ page import="org.opendolphin.odwebjee.MakeItLongerCommandHandler" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,10 +15,10 @@
             const dolphin = dol.dolphin(window.location + "/dolphin", true);
 
             // Make an attribute with name, no qualifier, and an empty String as initial value:
-            const attribute = dolphin.attribute("myAttribute", undefined, "");
+            const attribute = dolphin.attribute("<%=Constants.MY_ATTRIBUTE%>", undefined, "");
 
             // ... and put it into a presentation model with id 'myPM' and no type
-            var pm = dolphin.presentationModel("myPM", undefined, attribute);
+            var pm = dolphin.presentationModel("<%=Constants.MY_PM%>", undefined, attribute);
 
 
             // Bind value of attribute to value of myLabel:
@@ -34,7 +36,7 @@
             // Note also that it is not necessary to implement nor call custom HTTP/REST services to provide the 'makeItLonger' functionality:
             const myButton = document.getElementById("myButton");
             myButton.onclick = function () {
-                dolphin.send("makeItLonger");
+                dolphin.send("<%=MakeItLongerCommandHandler.CMD_MAKE_IT_LONGER%>");
             };
 
         });

@@ -17,9 +17,11 @@ import javax.inject.Singleton;
  * immediately visible on the client.
  */
 @Singleton
-@CommandHandler("makeItLonger")
+@CommandHandler(MakeItLongerCommandHandler.CMD_MAKE_IT_LONGER)
 @SuppressWarnings("unused")
 public class MakeItLongerCommandHandler implements ICommandHandler {
+
+	public static final String CMD_MAKE_IT_LONGER= "makeItLonger";
 
 	@Inject
 	ModelStoreHolder modelStoreHolder;
@@ -30,11 +32,11 @@ public class MakeItLongerCommandHandler implements ICommandHandler {
 	@Override
 	public void handleCommand(CommandEvent commandEvent) {
 
-		// Get a handle to the PM which was initially created by the client (see index.html):
-		PresentationModel pm = modelStoreHolder.getModelStore().findPresentationModelById("myPM");
+		// Get a handle to the PM which was initially created by the client (see index.jsp):
+		PresentationModel pm = modelStoreHolder.getModelStore().findPresentationModelById(Constants.MY_PM);
 
 		// get the PM's attribute 'myAttribute':
-		final Attribute at = pm.getAt("myAttribute");
+		final Attribute at = pm.getAt(Constants.MY_ATTRIBUTE);
 
 		// Change the value of the attribute. change is immediately visible on the client:
 		final String oldValue = (String)at.getValue();
