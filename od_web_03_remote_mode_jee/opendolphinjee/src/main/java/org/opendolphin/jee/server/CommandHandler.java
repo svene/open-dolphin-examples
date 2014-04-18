@@ -1,4 +1,4 @@
-package org.org.opendolphin.jee.server;
+package org.opendolphin.jee.server;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

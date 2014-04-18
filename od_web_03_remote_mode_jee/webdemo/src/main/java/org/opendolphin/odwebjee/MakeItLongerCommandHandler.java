@@ -4,10 +4,10 @@ import org.opendolphin.core.Attribute;
 import org.opendolphin.core.PresentationModel;
 import org.opendolphin.core.server.ServerAttribute;
 import org.opendolphin.core.server.ServerDolphin;
-import org.org.opendolphin.jee.server.CommandEvent;
-import org.org.opendolphin.jee.server.CommandHandler;
-import org.org.opendolphin.jee.server.ICommandHandler;
-import org.org.opendolphin.jee.server.ModelStoreHolder;
+import org.opendolphin.jee.server.CommandEvent;
+import org.opendolphin.jee.server.CommandHandler;
+import org.opendolphin.jee.server.ICommandHandler;
+import org.opendolphin.jee.server.ModelStoreHolder;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

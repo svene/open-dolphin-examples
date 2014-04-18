@@ -1,4 +1,4 @@
-rootProject.name = 'OpenDolphinJEE'
+rootProject.name = 'OpenDolphinJEEProject'
 
 include 'opendolphinjee'
 include 'webdemo'

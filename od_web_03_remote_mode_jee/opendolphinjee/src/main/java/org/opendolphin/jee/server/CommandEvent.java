@@ -1,4 +1,4 @@
-package org.org.opendolphin.jee.server;
+package org.opendolphin.jee.server;
 
 import org.opendolphin.core.comm.Command;
 
