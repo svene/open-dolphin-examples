@@ -19,25 +19,14 @@ import java.util.List;
 public class JEEOpenDolphinServlet extends HttpServlet {
 
 	@Inject
-	ModelStoreHolder modelStoreHolder;
-
-	@Inject
-	CommandHandlerRegistry commandHandlerRegistry;
+	CommandDispatcher commandDispatcher;
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Codec codec = new JsonCodec();
 		String requestJson = getPostData(req);
 		List<Command> commands = codec.decode(requestJson);
-		List<Command> results = new ArrayList<>();
-		for (Command command : commands) {
-			ICommandHandler commandHandler = commandHandlerRegistry.actionByKey(command.getId());
-			if (commandHandler != null) {
-				CommandEvent ce = new CommandEvent(command);
-				commandHandler.handleCommand(ce);
-				results.addAll(ce.getResponse());
-			}
-		}
+		List<Command> results = commandDispatcher.dispatchCommands(commands);
 		String jsonResponse = codec.encode(results);
 		resp.setStatus(HttpServletResponse.SC_OK);
 		resp.getWriter().write(jsonResponse);

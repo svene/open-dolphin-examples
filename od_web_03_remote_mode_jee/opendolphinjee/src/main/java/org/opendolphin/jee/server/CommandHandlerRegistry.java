@@ -24,6 +24,10 @@ public class CommandHandlerRegistry {
 		registerApplicationCommandHandlers();
 	}
 
+	ICommandHandler commandHandlerByKey(String key) {
+		return handlerMap.get(key);
+	}
+
 	private void registerApplicationCommandHandlers() {
 		for (ICommandHandler commandHandler : commandHandlers) {
 			Class<? extends ICommandHandler> clazz = commandHandler.getClass();
@@ -38,10 +42,6 @@ public class CommandHandlerRegistry {
 			}
 			handlerMap.put(name, commandHandler);
 		}
-	}
-
-	ICommandHandler actionByKey(String key) {
-		return handlerMap.get(key);
 	}
 
 	private String readKeyFromClass(Class<? extends ICommandHandler> clazz) {

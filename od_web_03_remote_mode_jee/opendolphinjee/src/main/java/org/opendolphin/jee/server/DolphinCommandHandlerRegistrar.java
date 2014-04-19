@@ -2,6 +2,7 @@ package org.opendolphin.jee.server;
 
 import org.opendolphin.core.ModelStore;
 import org.opendolphin.core.comm.*;
+import org.opendolphin.core.server.ServerDolphin;
 import org.opendolphin.core.server.action.*;
 import org.opendolphin.core.server.comm.ActionRegistry;
 import org.opendolphin.core.server.comm.CommandHandler;
@@ -35,7 +36,7 @@ class DolphinCommandHandlerRegistrar {
 
 	private void registerDolphinCommandHandler(DolphinServerAction dolphinServerAction, Class commandClass) {
 
-		final CommandHandler commandHandler = DolphinCommands.commandHandlerFromAction(dolphinServerAction, commandClass, modelStore);
+		final CommandHandler commandHandler = commandHandlerFromAction(dolphinServerAction, commandClass, modelStore);
 		handlerMap.put(Command.idFor(commandClass), new ICommandHandler() {
 			@Override
 			public void handleCommand(CommandEvent commandEvent) {
@@ -54,6 +55,17 @@ class DolphinCommandHandlerRegistrar {
 				commandHandler.handleCommand((EmptyNotification) commandEvent.getCommand(), commandEvent.getResponse());
 			}
 		});
+	}
+
+	public static <T extends Command> CommandHandler<T> commandHandlerFromAction(DolphinServerAction dolphinServerAction, Class<T> commandClass, ModelStore modelStore) {
+
+		// TODO: think about changing Dolphin implementation of StoreValueChangeAction to depend only on ModelStore and not on ServerDolphin
+		dolphinServerAction.setServerDolphin(new ServerDolphin(modelStore, null));
+
+		// TODO: ActionRegistry is only needed to get access to the CommandHandler, since it is private in CreatePresentationModelAction (CreatePresentationModelAction.createPresentationModel)
+		ActionRegistry registry = new ActionRegistry();
+		dolphinServerAction.registerIn(registry);
+		return registry.getAt(Command.idFor(commandClass)).get(0);
 	}
 
 
