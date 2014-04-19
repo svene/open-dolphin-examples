@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 
 
 @Singleton
-@DolphinCommandHandler(BaseValueChangedCommandHandler.COMMAND_ID)
+//@DolphinCommandHandler(BaseValueChangedCommandHandler.COMMAND_ID)
 @SuppressWarnings("unused")
 public class BaseValueChangedCommandHandler implements ICommandHandler {
 

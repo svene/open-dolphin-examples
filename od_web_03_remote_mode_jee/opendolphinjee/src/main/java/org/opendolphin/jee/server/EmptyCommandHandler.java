@@ -15,7 +15,7 @@ import javax.inject.Singleton;
  * From OpenDolphin's StoreAttributeAction.groovy
  */
 @Singleton
-@DolphinCommandHandler(EmptyCommandHandler.COMMAND_ID)
+//@DolphinCommandHandler(EmptyCommandHandler.COMMAND_ID)
 @SuppressWarnings("unused")
 public class EmptyCommandHandler implements ICommandHandler {
 

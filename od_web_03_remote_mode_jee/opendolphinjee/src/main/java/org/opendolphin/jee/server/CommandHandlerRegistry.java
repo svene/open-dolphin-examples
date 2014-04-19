@@ -13,10 +13,18 @@ public class CommandHandlerRegistry {
 	@Inject
 	Instance<ICommandHandler> commandHandlers;
 
+	@Inject
+	ModelStoreHolder modelStoreHolder;
+
 	private Map<String, ICommandHandler> handlerMap = new HashMap<>();
 
 	@PostConstruct
 	void initialize() {
+		new DolphinCommandHandlerRegistrar(handlerMap, modelStoreHolder.getModelStore()).registerDolphinCommandHandlers();
+		registerApplicationCommandHandlers();
+	}
+
+	private void registerApplicationCommandHandlers() {
 		for (ICommandHandler commandHandler : commandHandlers) {
 			Class<? extends ICommandHandler> clazz = commandHandler.getClass();
 			String name;

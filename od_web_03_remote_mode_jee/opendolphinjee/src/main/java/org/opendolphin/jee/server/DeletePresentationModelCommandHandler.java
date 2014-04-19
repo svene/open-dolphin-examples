@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 
 
 @Singleton
-@DolphinCommandHandler(DeletePresentationModelCommandHandler.COMMAND_ID)
+//@DolphinCommandHandler(DeletePresentationModelCommandHandler.COMMAND_ID)
 @SuppressWarnings("unused")
 public class DeletePresentationModelCommandHandler implements ICommandHandler {
 

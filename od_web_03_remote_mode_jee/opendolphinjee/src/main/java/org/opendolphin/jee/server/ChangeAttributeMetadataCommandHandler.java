@@ -13,7 +13,7 @@ import javax.inject.Singleton;
  * From OpenDolphin's StoreAttributeAction.groovy
  */
 @Singleton
-@DolphinCommandHandler(ChangeAttributeMetadataCommandHandler.COMMAND_ID)
+//@DolphinCommandHandler(ChangeAttributeMetadataCommandHandler.COMMAND_ID)
 @SuppressWarnings("unused")
 public class ChangeAttributeMetadataCommandHandler implements ICommandHandler {
 
