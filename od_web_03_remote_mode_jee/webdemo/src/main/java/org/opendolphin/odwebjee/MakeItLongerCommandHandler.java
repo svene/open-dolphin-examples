@@ -5,7 +5,7 @@ import org.opendolphin.core.PresentationModel;
 import org.opendolphin.core.server.ServerAttribute;
 import org.opendolphin.core.server.ServerDolphin;
 import org.opendolphin.jee.server.CommandEvent;
-import org.opendolphin.jee.server.CommandHandler;
+import org.opendolphin.jee.server.DolphinCommandHandler;
 import org.opendolphin.jee.server.ICommandHandler;
 import org.opendolphin.jee.server.ModelStoreHolder;
 
@@ -17,7 +17,7 @@ import javax.inject.Singleton;
  * immediately visible on the client.
  */
 @Singleton
-@CommandHandler(MakeItLongerCommandHandler.CMD_MAKE_IT_LONGER)
+@DolphinCommandHandler(MakeItLongerCommandHandler.CMD_MAKE_IT_LONGER)
 @SuppressWarnings("unused")
 public class MakeItLongerCommandHandler implements ICommandHandler {
 

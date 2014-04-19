@@ -20,8 +20,8 @@ public class CommandHandlerRegistry {
 		for (ICommandHandler commandHandler : commandHandlers) {
 			Class<? extends ICommandHandler> clazz = commandHandler.getClass();
 			String name;
-			if (clazz.isAnnotationPresent(CommandHandler.class)) {
-				CommandHandler annotation = clazz.getAnnotation(CommandHandler.class);
+			if (clazz.isAnnotationPresent(DolphinCommandHandler.class)) {
+				DolphinCommandHandler annotation = clazz.getAnnotation(DolphinCommandHandler.class);
 				name = annotation.value();
 			}
 			else {
