@@ -1,4 +1,4 @@
-package org.opendolphin.odwebjee;
+package org.opendolphin.odwebjee.makeitlonger.dolphin;
 
 import org.opendolphin.core.Attribute;
 import org.opendolphin.core.PresentationModel;
@@ -8,6 +8,7 @@ import org.opendolphin.jee.server.CommandEvent;
 import org.opendolphin.jee.server.DolphinCommandHandler;
 import org.opendolphin.jee.server.ICommandHandler;
 import org.opendolphin.jee.server.ModelStoreHolder;
+import org.opendolphin.odwebjee.makeitlonger.boundary.SomeEjb;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,12 +28,12 @@ public class MakeItLongerCommandHandler implements ICommandHandler {
 	ModelStoreHolder modelStoreHolder;
 
     @Inject
-    SomeEjb someEjb;
+	SomeEjb someEjb;
 
 	@Override
 	public void handleCommand(CommandEvent commandEvent) {
 
-		// Get a handle to the PM which was initially created by the client (see index.jsp):
+		// Get a handle to the PM which was initially created by the client (see makeitlonger.jsp):
 		PresentationModel pm = modelStoreHolder.getModelStore().findPresentationModelById(Constants.MY_PM);
 
 		// get the PM's attribute 'myAttribute':

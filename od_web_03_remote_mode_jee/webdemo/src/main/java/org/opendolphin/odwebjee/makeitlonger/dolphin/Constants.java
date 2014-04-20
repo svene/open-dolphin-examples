@@ -1,4 +1,4 @@
-package org.opendolphin.odwebjee;
+package org.opendolphin.odwebjee.makeitlonger.dolphin;
 
 public class Constants {
 
