@@ -8,7 +8,7 @@ import org.opendolphin.jee.server.CommandEvent;
 import org.opendolphin.jee.server.DolphinCommandHandler;
 import org.opendolphin.jee.server.ICommandHandler;
 import org.opendolphin.jee.server.ModelStoreHolder;
-import org.opendolphin.odwebjee.makeitlonger.boundary.SomeEjb;
+import org.opendolphin.odwebjee.makeitlonger.boundary.Appender;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -28,7 +28,7 @@ public class MakeItLongerCommandHandler implements ICommandHandler {
 	ModelStoreHolder modelStoreHolder;
 
     @Inject
-	SomeEjb someEjb;
+	Appender appender;
 
 	@Override
 	public void handleCommand(CommandEvent commandEvent) {
@@ -41,7 +41,7 @@ public class MakeItLongerCommandHandler implements ICommandHandler {
 
 		// Change the value of the attribute. change is immediately visible on the client:
 		final String oldValue = (String)at.getValue();
-		String newValue = someEjb.makeItLonger(oldValue);
+		String newValue = appender.makeItLonger(oldValue);
 		ServerDolphin.changeValue(commandEvent.getResponse(), (ServerAttribute) at, newValue);
 	}
 }
