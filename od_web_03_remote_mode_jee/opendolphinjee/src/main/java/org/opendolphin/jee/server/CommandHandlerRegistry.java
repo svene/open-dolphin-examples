@@ -1,14 +1,15 @@
 package org.opendolphin.jee.server;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
-import javax.inject.Singleton;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-@Singleton
-public class CommandHandlerRegistry {
+@SessionScoped
+public class CommandHandlerRegistry implements Serializable {
 
 	@Inject
 	Instance<ICommandHandler> commandHandlers;

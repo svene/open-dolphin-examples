@@ -12,17 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @WebServlet(urlPatterns = {"/dolphin"})
 public class JEEOpenDolphinServlet extends HttpServlet {
 
 	@Inject
 	CommandDispatcher commandDispatcher;
+	private final static Logger LOGGER = Logger.getLogger(JEEOpenDolphinServlet.class.getName());
+
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		LOGGER.info("DolphinServlet: session: " + req.getSession().getId());
 		Codec codec = new JsonCodec();
 		String requestJson = getPostData(req);
 		List<Command> commands = codec.decode(requestJson);
