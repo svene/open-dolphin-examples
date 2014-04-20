@@ -19,6 +19,7 @@
 <h1>Samples</h1>
 <ul>
 	<li><a href="makeitlonger/makeitlonger.jsp">MakeItLonger</a></li>
+	<li><a href="blog/blog.jsp">Blog</a></li>
 </ul>
 
 </div>

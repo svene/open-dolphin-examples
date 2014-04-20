@@ -18,11 +18,11 @@ import javax.inject.Singleton;
  * immediately visible on the client.
  */
 @Singleton
-@DolphinCommandHandler(MakeItLongerCommandHandler.CMD_MAKE_IT_LONGER)
+@DolphinCommandHandler(MakeItLongerCommandHandler.CMD_ID)
 @SuppressWarnings("unused")
 public class MakeItLongerCommandHandler implements ICommandHandler {
 
-	public static final String CMD_MAKE_IT_LONGER= "makeItLonger";
+	public static final String CMD_ID = "makeItLonger";
 
 	@Inject
 	ModelStoreHolder modelStoreHolder;
