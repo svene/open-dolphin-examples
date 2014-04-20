@@ -1,3 +1,5 @@
 dependencies {
 	compile project(':opendolphinjee')
+	compile 'org.eclipse.persistence:eclipselink:2.5.1'
+	compile 'org.apache.derby:derby:10.8.2.2'
 }

@@ -11,8 +11,10 @@ import org.opendolphin.jee.server.ModelStoreHolder;
 import org.opendolphin.odwebjee.blog.boundary.Blog;
 import org.opendolphin.odwebjee.blog.entity.BlogEntry;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.Date;
 
 /**
  * Simple Command Handler to demonstrate how a PM-attribute is modified and the change is
@@ -28,7 +30,7 @@ public class CreateBlog implements ICommandHandler {
 	@Inject
 	ModelStoreHolder modelStoreHolder;
 
-    @Inject
+    @EJB
 	Blog blog;
 
 	@Override
@@ -37,7 +39,7 @@ public class CreateBlog implements ICommandHandler {
 		PresentationModel pm = modelStoreHolder.getModelStore().findPresentationModelById(BlogPM.PM_ID);
 		final Attribute at = pm.getAt(BlogPM.ATT_TITLE);
 
-		BlogEntry blogEntry = blog.createBlog("Design Patterns");
+		BlogEntry blogEntry = blog.createBlog("Design Patterns", "some content", new Date());
 		ServerDolphin.changeValue(commandEvent.getResponse(), (ServerAttribute) at, blogEntry.getTitle());
 	}
 }
