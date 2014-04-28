@@ -2,14 +2,11 @@ package org.opendolphin.jee.server;
 
 import org.opendolphin.core.comm.Command;
 
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@SessionScoped
-class CommandDispatcher implements Serializable {
+class CommandDispatcher {
 
 	@Inject
 	CommandHandlerRegistry commandHandlerRegistry;

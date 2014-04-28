@@ -13,14 +13,12 @@ import org.opendolphin.odwebjee.blog.entity.BlogEntry;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.Date;
 
 /**
  * Simple Command Handler to demonstrate how a PM-attribute is modified and the change is
  * immediately visible on the client.
  */
-@Singleton
 @DolphinCommandHandler(CreateBlog.CMD_ID)
 @SuppressWarnings("unused")
 public class CreateBlog implements ICommandHandler {

@@ -2,3 +2,7 @@
 == Third HTML based Open-Dolphin Example Application
 
 In contrast to the second example application this one ... TBD
+
+== Misc. hints
+CDI 1.1 (JEE7): use not-annotated classes as beans for injection and where to put beans.xml file see:
+http://docs.oracle.com/javaee/7/tutorial/doc/cdi-adv001.htm

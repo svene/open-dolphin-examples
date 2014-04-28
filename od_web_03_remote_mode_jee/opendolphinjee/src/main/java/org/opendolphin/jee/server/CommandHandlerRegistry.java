@@ -1,15 +1,17 @@
 package org.opendolphin.jee.server;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-@SessionScoped
-public class CommandHandlerRegistry implements Serializable {
+public class CommandHandlerRegistry {
+
+	private final static Logger LOGGER = Logger.getLogger(CommandHandlerRegistry.class.getName());
+
 
 	@Inject
 	Instance<ICommandHandler> commandHandlers;
@@ -49,6 +51,8 @@ public class CommandHandlerRegistry implements Serializable {
 		String sn = clazz.getSimpleName();
 		String key = String.valueOf(sn.charAt(0)).toLowerCase();
 		key += sn.substring(1).replace("Handler", "");
+		LOGGER.log(Level.INFO, "key: {0}", new Object[] {""});
+
 		System.out.println("key =  " + key);
 		return key;
 	}

@@ -11,13 +11,11 @@ import org.opendolphin.jee.server.ModelStoreHolder;
 import org.opendolphin.odwebjee.makeitlonger.boundary.Appender;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  * Simple Command Handler to demonstrate how a PM-attribute is modified and the change is
  * immediately visible on the client.
  */
-@Singleton
 @DolphinCommandHandler(MakeItLongerCommandHandler.CMD_ID)
 @SuppressWarnings("unused")
 public class MakeItLongerCommandHandler implements ICommandHandler {
