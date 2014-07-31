@@ -45,14 +45,14 @@
 <body ng-app="app">
 
 <input type="text" ng-model="firstName">
-<h1>{{firstName}}</h1>
+<h1>AngularJS Model: {{firstName}}</h1>
 
 
 <button id="myButton">make string longer</button>
 
-<div id="myLabel">unchanged</div>
+<h1>Dolphin Model: <span id="myLabel">unchanged</span></h1>
 
-<odbind ng-model="firstName"></odbind>
+<odbind ng-model="firstName" pm="myPM"></odbind>
 
 </body>
 </html>
