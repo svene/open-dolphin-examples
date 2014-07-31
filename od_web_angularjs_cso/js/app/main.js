@@ -14,16 +14,22 @@ app.directive('odbind', function($parse) {
 	return {
 		restrict: 'E'
 		,scope: {
-			ngModel: '='
+			ngModel: '=',
+			pm: '='
 		}
 		,link: function(scope, element, attrs){
 			scope.$watch('ngModel', function(newVal, oldVal) {
 				console.log("odbind: ", oldVal, " -> ",  newVal);
-				console.log("dolphin: ", globalDolphin);
+				console.log("pm: ", attrs.pm);
 				if (globalDolphin) {
-					console.log("dolphin found");
-					var attr = globalDolphin.getAt('myPM').getAt('myAttribute')
-					attr.setValue(newVal);
+					var pm = globalDolphin.getAt(attrs.pm);
+					if (pm) {
+						var attr = globalDolphin.getAt(attrs.pm).getAt('myAttribute');
+						attr.setValue(newVal);
+					}
+					else {
+						console.log("ERROR: cannot find pm: ", attrs.pm)
+					}
 				}
 			});
 		}
