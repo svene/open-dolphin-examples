@@ -9,46 +9,58 @@
     <script data-main="js/dolphin/" src="libs/require.js"></script>
 
     <script>
-		var globalDolphin;
-        require([ 'opendolphin' ], function (dol) {
-            // Set up the dolphin for client-side only mode (first parameter url is null)
-            // and not forcing a new session on page reload (irrelevant for client side only mode):
-            const dolphin = dol.dolphin(null, false);
-			globalDolphin = dolphin;
-
-            // Make an attribute with name, no qualifier, and an empty String as initial value:
-            const attribute = dolphin.attribute("myAttribute", undefined, "");
-
-            // ... and put it into a presentation model with id 'myPM' and no type
-            var pm = dolphin.presentationModel("myPM", undefined, attribute);
-
-
-            // Bind value of attribute to value of myLabel:
-            const myLabel = document.getElementById("myLabel");
-            attribute.onValueChange(function (event) {
-                myLabel.innerHTML = event.newValue;
-            });
-
-
-            // On button click change the value of the attribute, which causes the bound 'myLabel' to change:
-            const myButton = document.getElementById("myButton");
-            myButton.onclick = function () {
-                attribute.setValue(attribute.getValue() + ' longer');
-            };
-
-        });
     </script>
+	<script>
+		var globalDolphin;
+
+		angular.element(document).ready(function() {
+
+			require([ 'opendolphin' ], function (dol) {
+				// Set up the dolphin for client-side only mode (first parameter url is null)
+				// and not forcing a new session on page reload (irrelevant for client side only mode):
+				const dolphin = dol.dolphin(null, false);
+				globalDolphin = dolphin;
+
+				// Make an attribute with name, no qualifier, and an empty String as initial value:
+				const attribute = dolphin.attribute("myAttribute", undefined, "");
+
+				// ... and put it into a presentation model with id 'myPM' and no type
+				var pm = dolphin.presentationModel("myPM", undefined, attribute);
+
+
+				// Bind value of attribute to value of myLabel:
+				console.log("1");
+				const myLabel = document.getElementById("myLabel");
+				attribute.onValueChange(function (event) {
+					myLabel.innerHTML = event.newValue;
+				});
+				console.log("2");
+
+
+				// On button click change the value of the attribute, which causes the bound 'myLabel' to change:
+				const myButton = document.getElementById("myButton");
+				myButton.onclick = function () {
+					attribute.setValue(attribute.getValue() + ' longer');
+				};
+
+				angular.bootstrap(document, ['app']);
+
+			});
+
+		});
+	</script>
 
 
 </head>
 
-<body ng-app="app">
+<!--<body ng-app="app">-->
+<body>
 
 <input type="text" ng-model="firstName">
 <h1>AngularJS Model: {{firstName}}</h1>
 
 
-<button id="myButton">make string longer</button>
+<button id="myButton">add 'longer' to dolphin model</button>
 
 <h1>Dolphin Model: <span id="myLabel">unchanged</span></h1>
 
