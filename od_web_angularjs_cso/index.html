@@ -9,10 +9,12 @@
     <script data-main="js/dolphin/" src="libs/require.js"></script>
 
     <script>
+		var globalDolphin;
         require([ 'opendolphin' ], function (dol) {
             // Set up the dolphin for client-side only mode (first parameter url is null)
             // and not forcing a new session on page reload (irrelevant for client side only mode):
             const dolphin = dol.dolphin(null, false);
+			globalDolphin = dolphin;
 
             // Make an attribute with name, no qualifier, and an empty String as initial value:
             const attribute = dolphin.attribute("myAttribute", undefined, "");

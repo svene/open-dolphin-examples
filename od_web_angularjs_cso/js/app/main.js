@@ -19,7 +19,12 @@ app.directive('odbind', function($parse) {
 		,link: function(scope, element, attrs){
 			scope.$watch('ngModel', function(newVal, oldVal) {
 				console.log("odbind: ", oldVal, " -> ",  newVal);
-				//console.log("dolphin: ", dolphin);
+				console.log("dolphin: ", globalDolphin);
+				if (globalDolphin) {
+					console.log("dolphin found");
+					var attr = globalDolphin.getAt('myPM').getAt('myAttribute')
+					attr.setValue(newVal);
+				}
 			});
 		}
 	}
