@@ -15,7 +15,8 @@ app.directive('odbind', function($parse) {
 		restrict: 'E'
 		,scope: {
 			ngModel: '=',
-			pm: '='
+			pm: '=',
+			attribute: '='
 		}
 		,link: function(scope, element, attrs){
 			scope.$watch('ngModel', function(newVal, oldVal) {
@@ -24,8 +25,13 @@ app.directive('odbind', function($parse) {
 				if (globalDolphin) {
 					var pm = globalDolphin.getAt(attrs.pm);
 					if (pm) {
-						var attr = globalDolphin.getAt(attrs.pm).getAt('myAttribute');
-						attr.setValue(newVal);
+						var attr = globalDolphin.getAt(attrs.pm).getAt(attrs.attribute);
+						if (attr) {
+							attr.setValue(newVal);
+						}
+						else {
+							console.log("ERROR: cannot find attribute: ", attrs.attribute, " on pm: ", attrs.pm)
+						}
 					}
 					else {
 						console.log("ERROR: cannot find pm: ", attrs.pm)
