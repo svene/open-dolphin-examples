@@ -9,15 +9,17 @@ app.controller('DemoCtrl', function($scope) {
 
 	$scope.firstName = "Sven";
 
-    $scope.doit = function (data) {
+    $scope.appendLonger = function (data) {
         console.log("hallo " + $scope.firstName);
+		var attr = globalDolphin.getAt('myPM').getAt('myAttribute');
+		attr.setValue(attr.getValue() + ' longer');
     };
 
 
 });
 
 
-app.directive('odbind', function($parse) {
+app.directive('odbind', function($parse, $timeout) {
 	return {
 		restrict: 'E'
 		,scope: {
@@ -63,15 +65,13 @@ app.directive('odbind', function($parse) {
 					console.log("dolphin and ng-model are the same");
 					return;
 				}
-				scope.ngModel = event.newValue;
-				scope.$apply();
+				$timeout(function() { // prevent nested apply problem. See https://docs.angularjs.org/error/$rootScope/inprog?p0=$apply
+					scope.ngModel = event.newValue;
+				}, 0, true);
 			});
 			console.log("4");
 		}
 	}
 });
-
-
-
 
 
