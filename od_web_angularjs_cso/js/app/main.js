@@ -1,6 +1,6 @@
 var app = angular.module('app', []);
 
-app.controller('DemoCtrl', function($scope) {
+app.controller('DemoCtrl', function($scope, $timeout) {
 
 	$scope.init = function()
 	{
@@ -15,43 +15,28 @@ app.controller('DemoCtrl', function($scope) {
 		attr.setValue(attr.getValue() + ' longer');
     };
 
+	$scope.bindPM = function(ngModelName, pmId, attrName) {
+		$scope.$watch(ngModelName, function(newVal, oldVal) {
+			console.log("ddd: ", oldVal, " -> ",  newVal);
 
-});
-
-
-app.directive('odbind', function($parse, $timeout) {
-	return {
-		restrict: 'E'
-		,scope: {
-			ngModel: '=',
-			pm: '=',
-			attribute: '='
-		}
-		,link: function(scope, element, attrs) {
-			scope.$watch('ngModel', function(newVal, oldVal) {
-				console.log("odbind: ", oldVal, " -> ",  newVal);
-				console.log("pm: ", attrs.pm);
-				if (globalDolphin) {
-					var pm = globalDolphin.getAt(attrs.pm);
-					if (pm) {
-						var attr = globalDolphin.getAt(attrs.pm).getAt(attrs.attribute);
-						if (attr) {
-							attr.setValue(newVal);
-						}
-						else {
-							console.log("ERROR: cannot find attribute: ", attrs.attribute, " on pm: ", attrs.pm)
-						}
+			if (globalDolphin) {
+				var pm = globalDolphin.getAt(pmId);
+				if (pm) {
+					var attr = globalDolphin.getAt(pmId).getAt(attrName);
+					if (attr) {
+						attr.setValue(newVal);
 					}
 					else {
-						console.log("ERROR: cannot find pm: ", attrs.pm)
+						console.log("ERROR: cannot find attribute: ", attrName, " on pm: ", pmId)
 					}
 				}
-			});
+				else {
+					console.log("ERROR: cannot find pm: ", pmId)
+				}
+			}
 
 			// Bind value of attribute to ng-model:
-			console.log("3");
-
-			globalDolphin.getAt(attrs.pm).getAt(attrs.attribute).onValueChange(function (event) {
+			globalDolphin.getAt(pmId).getAt(attrName).onValueChange(function (event) {
 				console.log("dolphin model changed: ", event);
 				if (event.newValue === null) {
 					console.log("newValue is null");
@@ -61,17 +46,23 @@ app.directive('odbind', function($parse, $timeout) {
 					console.log("values are the same");
 					return;
 				}
-				if (event.newValue === scope.ngModel) {
+				if (event.newValue === $scope[ngModelName]) {
 					console.log("dolphin and ng-model are the same");
 					return;
 				}
 				$timeout(function() { // prevent nested apply problem. See https://docs.angularjs.org/error/$rootScope/inprog?p0=$apply
-					scope.ngModel = event.newValue;
+					$scope[ngModelName] = event.newValue;
 				}, 0, true);
 			});
-			console.log("4");
-		}
-	}
+
+		});
+
+	};
+
+	$scope.bindPM('firstName', 'myPM', 'myAttribute');
+
 });
+
+;
 
 
