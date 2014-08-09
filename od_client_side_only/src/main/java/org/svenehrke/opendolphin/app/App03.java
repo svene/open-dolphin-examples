@@ -10,9 +10,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.opendolphin.binding.JFXBinder;
 import org.opendolphin.core.client.ClientAttribute;
+import org.opendolphin.core.client.ClientDolphin;
 import org.opendolphin.core.client.ClientPresentationModel;
 import org.opendolphinx.extension.client.ClientSideOnlyDolphin;
-import org.opendolphinx.extension.javafxclient.JavaFXApplicationParameters;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -30,9 +30,12 @@ public class App03 extends javafx.application.Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
+		// Read JavaFXParameters:
+		ClientDolphin clientDolphin = OdCsoJavaFXApplicationParameters.clientDolphin;
+
 		// Construct client-side-only presentation model with helper method:
 		ClientAttribute attr1 = new ClientAttribute(Constants.ATTR_1, null, Constants.QUALIFIER_1);
-		ClientSideOnlyDolphin clientSideOnlyDolphin = new ClientSideOnlyDolphin(JavaFXApplicationParameters.clientDolphin);
+		ClientSideOnlyDolphin clientSideOnlyDolphin = new ClientSideOnlyDolphin(clientDolphin);
 		ClientPresentationModel pm1 = clientSideOnlyDolphin.presentationModel(Constants.PM_1, attr1);
 
 		// new Attribute but same qualifier which connects both attributes without explicit binding:

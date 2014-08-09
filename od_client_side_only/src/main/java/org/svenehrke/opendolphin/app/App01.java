@@ -11,13 +11,12 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.opendolphin.binding.JFXBinder;
 import org.opendolphin.core.client.ClientAttribute;
+import org.opendolphin.core.client.ClientDolphin;
 import org.opendolphin.core.client.ClientPresentationModel;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-
-import static org.opendolphinx.extension.javafxclient.JavaFXApplicationParameters.clientDolphin;
 
 /**
  * Binds one attribute to two labels.
@@ -32,6 +31,10 @@ public class App01 extends javafx.application.Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
+
+		// Read JavaFXParameters:
+		ClientDolphin clientDolphin = OdCsoJavaFXApplicationParameters.clientDolphin;
+
 		// Construct client-side-only presentation model:
 		ClientPresentationModel pm1 = new ClientPresentationModel(Constants.PM_1, Arrays.asList(new ClientAttribute(Constants.ATTR_1)));
 		pm1.setClientSideOnly(true);

@@ -32,6 +32,7 @@ public class CommandHandlerRegistry {
 	}
 
 	private void registerApplicationCommandHandlers() {
+		commandHandlers.select()
 		for (ICommandHandler commandHandler : commandHandlers) {
 			Class<? extends ICommandHandler> clazz = commandHandler.getClass();
 			String name;

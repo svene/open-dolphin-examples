@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 @SessionScoped
 public class ModelStoreHolder implements Serializable {
 
-	ModelStore modelStore = new ModelStore();
+	ModelStore modelStore = new ModelStore();//6
 
 	private final static Logger LOGGER = Logger.getLogger(ModelStoreHolder.class.getName());
 
