@@ -12,8 +12,9 @@ var GreetApplication = React.createClass({
 		return <div className="container" role="main">
 			<input id="nameTextField" type="text" value={this.props.name} placeholder="placeholder" onChange={this.onChange}></input>
 			<button id="greetButton" className="btn btn-primary">Greet</button>
+			<p id="name_echo" >Entered name: {this.props.name}</p>
 			<h1>
-				<span id="greetingLabel" className="label label-primary label-success">Hello {this.props.name}</span>
+				<span id="greetingLabel" className="label label-primary label-success">Greeting</span>
 			</h1>
 
 		</div>;
