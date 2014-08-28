@@ -17,7 +17,7 @@ var GreetApplication = React.createClass({
 	render: function () {
 
 		return <div className="container" role="main">
-			<input id="nameTextField" type="text" defaultValue={this.state.name} placeholder="placeholder" onChange={this.onChange}></input>
+			<input id="nameTextField" type="text" value={this.state.name} placeholder="placeholder" onChange={this.onChange}></input>
 			<button id="greetButton" className="btn btn-primary">Greet</button>
 			<h1>
 				<span id="greetingLabel" className="label label-primary label-success">Hello {this.state.name}</span>
