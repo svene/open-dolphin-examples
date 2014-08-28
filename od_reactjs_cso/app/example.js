@@ -1,7 +1,7 @@
 /**
  * @jsx React.DOM
  */
-var ExampleApplication = React.createClass({
+var GreetApplication = React.createClass({
 
 	getInitialState: function() {
 		return {
@@ -9,20 +9,39 @@ var ExampleApplication = React.createClass({
 		}
 	},
 
+	onChange: function(e) {
+		this.setState({name: e.target.value}); // first update component state...
+		this.props.onChange(e); // ... then notify listener
+	},
+
 	render: function () {
 
 		return <div className="container" role="main">
-			<input id="nameTextField" type="text" defaultValue={this.state.name} placeholder="placeholder"></input>
+			<input id="nameTextField" type="text" defaultValue={this.state.name} placeholder="placeholder" onChange={this.onChange}></input>
 			<button id="greetButton" className="btn btn-primary">Greet</button>
 			<h1>
-				<span id="greetingLabel" className="label label-primary label-success">Hello {name}</span>
+				<span id="greetingLabel" className="label label-primary label-success">Hello {this.state.name}</span>
 			</h1>
 
 		</div>;
 	}
 });
 
-React.renderComponent(
-<ExampleApplication initialName={'Duke'}/>,
-document.getElementById('container')
-);
+var globalName = 'Duke';
+
+var render = function() {
+	React.renderComponent(
+		new GreetApplication({
+			initialName: globalName,
+			onChange: function(e) {
+				globalName = e.target.value;
+				console.log(globalName);
+				render();
+			}
+		}),
+		document.getElementById('container')
+	);
+};
+
+render();
+
