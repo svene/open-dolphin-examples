@@ -8,7 +8,12 @@ var ExampleApplication = React.createClass({
     var message =
       'React has been successfully running for ' + seconds + ' seconds.';
 
-    return <p>{message}</p>;
+    return <div className="container" role="main">
+		  <input id="nameTextField" type="text" value=""></input>
+			  <button id="greetButton" className="btn btn-primary">Greet</button>
+			  <h1><span id="greetingLabel" className="label label-primary label-success">unchanged</span></h1>
+
+		  </div>;
   }
 });
 
