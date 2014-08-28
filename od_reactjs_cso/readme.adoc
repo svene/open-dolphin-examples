@@ -1,0 +1,1 @@
+This tutorial helped developing this example: http://webdesignporto.com/react-js-an-interactive-tutorial-to-get-started/
