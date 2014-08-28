@@ -3,9 +3,9 @@
  */
 var ExampleApplication = React.createClass({
 
-	getInitialState: function(){
+	getInitialState: function() {
 		return {
-			name: 'Duke'
+			name: this.props.initialName
 		}
 	},
 
@@ -23,6 +23,6 @@ var ExampleApplication = React.createClass({
 });
 
 React.renderComponent(
-<ExampleApplication/>,
+<ExampleApplication initialName={'Duke'}/>,
 document.getElementById('container')
 );
