@@ -4,12 +4,11 @@ import org.opendolphin.core.Attribute;
 import org.opendolphin.core.PresentationModel;
 import org.opendolphin.core.server.ServerAttribute;
 import org.opendolphin.core.server.ServerDolphin;
-import org.opendolphin.jee.server.CommandEvent;
-import org.opendolphin.jee.server.DolphinCommandHandler;
-import org.opendolphin.jee.server.ICommandHandler;
-import org.opendolphin.jee.server.ModelStoreHolder;
+import org.opendolphin.core.server.ServerModelStore;
+import org.opendolphin.jee.server.*;
 import org.opendolphin.odwebjee.makeitlonger.boundary.Appender;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 /**
@@ -23,7 +22,7 @@ public class MakeItLongerCommandHandler implements ICommandHandler {
 	public static final String CMD_ID = "makeItLonger";
 
 	@Inject
-	ModelStoreHolder modelStoreHolder;
+	DolphinSessionBeans dolphinSessionBeans;
 
     @Inject
 	Appender appender;
@@ -32,7 +31,8 @@ public class MakeItLongerCommandHandler implements ICommandHandler {
 	public void handleCommand(CommandEvent commandEvent) {
 
 		// Get a handle to the PM which was initially created by the client (see makeitlonger.jsp):
-		PresentationModel pm = modelStoreHolder.getModelStore().findPresentationModelById(Constants.MY_PM);
+		ServerModelStore modelStore = dolphinSessionBeans.getModelStore();
+		PresentationModel pm = modelStore.findPresentationModelById(Constants.MY_PM);
 
 		// get the PM's attribute 'myAttribute':
 		final Attribute at = pm.getAt(Constants.MY_ATTRIBUTE);
@@ -40,6 +40,7 @@ public class MakeItLongerCommandHandler implements ICommandHandler {
 		// Change the value of the attribute. change is immediately visible on the client:
 		final String oldValue = (String)at.getValue();
 		String newValue = appender.makeItLonger(oldValue);
+//		at.setValue(newValue);
 		ServerDolphin.changeValue(commandEvent.getResponse(), (ServerAttribute) at, newValue);
 	}
 }

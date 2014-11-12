@@ -10,10 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.Response;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -37,10 +35,6 @@ public class JEEOpenDolphinServlet extends HttpServlet {
 		resp.getWriter().write(jsonResponse);
 		resp.getWriter().flush();
 		resp.getWriter().close();
-		URI uri;
-		Confirmation confirmation;
-			return Response.created(uri).entity(confirmation).build();
-		Response.status(Response.Status.CONFLICT).header("x-error-msg", "don't be concurrent");
 	}
 
 	public static String getPostData(HttpServletRequest req) {

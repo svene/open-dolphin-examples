@@ -34,6 +34,7 @@
 
             // bind value of attribute to value of myLabel
             attribute.onValueChange(function (event) {
+                console.log("attribute changed");
                 myLabel.innerHTML = "'" + event.newValue + "'";
             });
 

@@ -63,6 +63,7 @@ app.controller('DemoCtrl', function($scope, $timeout) {
 
 });
 
-;
+
+
 
 
