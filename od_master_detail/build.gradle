@@ -1,0 +1,20 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url 'http://dl.bintray.com/svene/mavenrepo'
+    }
+}
+
+dependencies {
+    compile 'org.open-dolphin:dolphin-server:0.11'
+    compile 'org.open-dolphin:dolphin-client:0.11'
+
+    testCompile 'org.open-dolphin-extension:javafxcombined-extension:0.4-SNAPSHOT'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}

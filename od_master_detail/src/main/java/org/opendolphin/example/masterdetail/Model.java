@@ -1,18 +1,35 @@
 package org.opendolphin.example.masterdetail;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import org.opendolphin.core.PresentationModel;
 import org.opendolphin.core.server.DTO;
 import org.opendolphin.core.server.ServerDolphin;
+import org.opendolphin.core.server.ServerPresentationModel;
+import org.opendolphin.core.server.Slot;
 
 import java.util.function.Supplier;
 
-public class Model {
+import static org.opendolphin.example.masterdetail.ApplicationConstants.*;
 
-	public final PresentationModel currentItem;
+public class Model { // todo: rename as MasterDetailModel
+
 	private final String masterDetailId;
+	public final PresentationModel currentItem;
+	private StringProperty currentPMid = new SimpleStringProperty();
 
 	public Model(ServerDolphin dolphin, String masterDetailId, String type, Supplier<DTO> dtoSupplier) {
 		this.masterDetailId = masterDetailId;
-		currentItem = dolphin.presentationModel(masterDetailId + "_currentItem", type + "_technical", dtoSupplier.get() );
+		currentItem = dolphin.presentationModel(masterDetailId + CURRENT_ITEM_ID_POSTFIX, type + TECHNICAL_ID_POSTFIX, dtoSupplier.get() );
+		PresentationModel metaPM = dolphin.presentationModel(masterDetailId + META_PM_ID_POSTFIX, TYPE_MASTER_DETAIL_META, new DTO( new Slot(ATT_META_CURRENT_PM_ID, null) ) );
+
+		metaPM.getAt(ATT_META_CURRENT_PM_ID).addPropertyChangeListener(evt -> {
+			if ( ! (evt.getNewValue() instanceof String)) return;
+			String pmId = (String) evt.getNewValue();
+			ServerPresentationModel pm = dolphin.findPresentationModelById(pmId);
+			if (pm != null) {
+				currentItem.getAt(ATT_NAME).setValue(pm.getAt(ATT_NAME).getValue());
+			}
+		});
 	}
 }
