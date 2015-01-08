@@ -24,7 +24,7 @@ public class MasterDetailModel {
 			String pmId = (String) evt.getNewValue();
 			ServerPresentationModel pm = dolphin.findPresentationModelById(pmId);
 			if (pm != null) {
-				currentItem.getAt(ItemApi.ATT_NAME).setValue(pm.getAt(ItemApi.ATT_NAME).getValue());
+				currentItem.syncWith(pm);
 			}
 		});
 	}
