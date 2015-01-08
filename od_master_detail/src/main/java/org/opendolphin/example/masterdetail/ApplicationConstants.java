@@ -30,11 +30,21 @@ public class ApplicationConstants {
 	public static final ItemPM P1 = new ItemPM("PM1", "Sven", "Hello");
 	public static final ItemPM P2 = new ItemPM("PM2", "Uli", "Good Morning");
 
-	public interface MasterDetailsApi {
+	public static class MasterDetailsApi {
 		public static final String TYPE = MasterDetailsApi.class.getName() + "_TYPE";
 		public static final String ATT_CURRENT_PM_ID = MasterDetailsApi.class.getName() + "_ATT_CURRENT_PM_ID";
+
+		public static String getCurrentPmId(String masterDetailId) {
+			return masterDetailId + "_currentPM";
+		}
+		public static String getMetaPmId(String masterDetailId) {
+			return masterDetailId + "_metaPM";
+		}
 	}
 
+	public static String getTechnicalType(String type) {
+		return type + TECHNICAL_ID_POSTFIX;
+	}
 
 	public static class MasterDetail {
 		public final String id, currentPMId, metaPMId;
