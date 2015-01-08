@@ -13,7 +13,7 @@ import static org.junit.Assert.assertNull;
 import static org.opendolphin.client.infra.ODLambdaSupport.onFinishedHandler;
 import static org.opendolphin.example.masterdetail.ApplicationConstants.*;
 
-public class ModelTest {
+public class MasterDetailModelTest {
 
 	@Test
 	public void test1() throws Exception {

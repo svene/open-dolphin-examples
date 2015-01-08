@@ -17,7 +17,7 @@ public class ApplicationAction extends DolphinServerAction {
 
 		actionRegistry.register(ApplicationConstants.COMMAND_INIT, new CommandHandler<Command>() {
 			public void handleCommand(Command command, List<Command> response) {
-				Model model = new Model(getServerDolphin(), MASTER_DETAIL_FOR_ITEMS.id, ItemApi.ITEM_TYPE, () -> newDTO(null, null));
+				MasterDetailModel masterDetailModel = new MasterDetailModel(getServerDolphin(), MASTER_DETAIL_FOR_ITEMS.id, ItemApi.ITEM_TYPE, () -> newDTO(null, null));
 
 				// Create PM:
 				getServerDolphin().presentationModel(P1.id, ItemApi.ITEM_TYPE, newDTO(P1.name, P1.greeting));
