@@ -20,15 +20,15 @@ public class Model { // todo: rename as MasterDetailModel
 
 	public Model(ServerDolphin dolphin, String masterDetailId, String type, Supplier<DTO> dtoSupplier) {
 		this.masterDetailId = masterDetailId;
-		currentItem = dolphin.presentationModel(masterDetailId + CURRENT_ITEM_ID_POSTFIX, type + TECHNICAL_ID_POSTFIX, dtoSupplier.get() );
-		PresentationModel metaPM = dolphin.presentationModel(masterDetailId + META_PM_ID_POSTFIX, TYPE_MASTER_DETAIL_META, new DTO( new Slot(ATT_META_CURRENT_PM_ID, null) ) );
+		currentItem = dolphin.presentationModel(MASTER_DETAIL_FOR_ITEMS.currentPMId, type + TECHNICAL_ID_POSTFIX, dtoSupplier.get() );
+		PresentationModel metaPM = dolphin.presentationModel(MASTER_DETAIL_FOR_ITEMS.metaPMId, MasterDetailsApi.TYPE, new DTO( new Slot(MasterDetailsApi.ATT_CURRENT_PM_ID, null) ) );
 
-		metaPM.getAt(ATT_META_CURRENT_PM_ID).addPropertyChangeListener(evt -> {
+		metaPM.getAt(MasterDetailsApi.ATT_CURRENT_PM_ID).addPropertyChangeListener(evt -> {
 			if ( ! (evt.getNewValue() instanceof String)) return;
 			String pmId = (String) evt.getNewValue();
 			ServerPresentationModel pm = dolphin.findPresentationModelById(pmId);
 			if (pm != null) {
-				currentItem.getAt(ATT_NAME).setValue(pm.getAt(ATT_NAME).getValue());
+				currentItem.getAt(ItemApi.ATT_NAME).setValue(pm.getAt(ItemApi.ATT_NAME).getValue());
 			}
 		});
 	}

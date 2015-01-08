@@ -6,25 +6,46 @@ package org.opendolphin.example.masterdetail;
 public class ApplicationConstants {
 
 	public static final String PM_APP = unique("APP");
-	public static final String ATT_NAME = "ATT_NAME";
-	public static final String ATT_GREETING = "ATT_GREETING";
 
-	public static final String COMMAND_INIT = unique("CMD_INIT");
-	public static final String COMMAND_GREET = unique("CMD_GREET");
-	public static final String ITEM_TYPE = "ITEM_TYPE";
-	public static final String ITEM_MASTER_DETAIL_ID = "ITEM_MASTER_DETAIL_ID";
-	public static final String CURRENT_ITEM_ID_POSTFIX = "_currentItem";
+	public static final String COMMAND_INIT = unique("CMD_INIT"), COMMAND_GREET = unique("CMD_GREET");
 	public static final String TECHNICAL_ID_POSTFIX = "_technical";
 
-	public static final String META_PM_ID_POSTFIX = "_meta";
-	public static final String TYPE_MASTER_DETAIL_META = "TYPE_MASTER_DETAIL_META";
-	public static final String ATT_META_CURRENT_PM_ID = "ATT_META_CURRENT_PM_ID";
 
-	public static final String PM1_NAME = "Sven";
-	public static final String PM2_NAME = "Uli";
-	public static final String PM1_GREETING = "Hello";
-	public static final String PM2_GREETING = "Good Morning";
+	public interface ItemApi {
 
+		String ATT_NAME = ItemApi.class.getName() + "ATT_NAME";
+		String ATT_GREETING = ItemApi.class.getName() + "ATT_GREETING";
+		String ITEM_TYPE = ItemApi.class.getName() + "ITEM_TYPE";
+	}
+
+	public static class ItemPM {
+		public final String id, name, greeting;
+
+		public ItemPM(String id, String name, String greeting) {
+			this.id = id;
+			this.name = name;
+			this.greeting = greeting;
+		}
+	}
+	public static final ItemPM P1 = new ItemPM("PM1", "Sven", "Hello");
+	public static final ItemPM P2 = new ItemPM("PM2", "Uli", "Good Morning");
+
+	public interface MasterDetailsApi {
+		public static final String TYPE = MasterDetailsApi.class.getName() + "_TYPE";
+		public static final String ATT_CURRENT_PM_ID = MasterDetailsApi.class.getName() + "_ATT_CURRENT_PM_ID";
+	}
+
+
+	public static class MasterDetail {
+		public final String id, currentPMId, metaPMId;
+
+		public MasterDetail(String id) {
+			this.id = id;
+			currentPMId = id + "_currentPM";
+			metaPMId = id + "_metaPM";
+		}
+	}
+	public static MasterDetail MASTER_DETAIL_FOR_ITEMS = new MasterDetail("MDItem");
 
 	/**
 	 * Unify the identifier with the class name prefix.

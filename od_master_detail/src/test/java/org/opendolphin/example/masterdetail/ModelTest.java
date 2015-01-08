@@ -26,25 +26,25 @@ public class ModelTest {
 		cdl.await();
 
 		// Access to presentation models:
-		List<PresentationModel> pms = clientDolphin.findAllPresentationModelsByType(ITEM_TYPE);
+		List<PresentationModel> pms = clientDolphin.findAllPresentationModelsByType(ItemApi.ITEM_TYPE);
 		assertEquals(2, pms.size()); // See COMMAND_INIT handler
 		PresentationModel pm0 = pms.get(0);
 		PresentationModel pm1 = pms.get(1);
-		PresentationModel currentItem = clientDolphin.findPresentationModelById(ITEM_MASTER_DETAIL_ID + CURRENT_ITEM_ID_POSTFIX);
-		Attribute currentItemName = currentItem.getAt(ATT_NAME);
+		PresentationModel currentItem = clientDolphin.findPresentationModelById(MASTER_DETAIL_FOR_ITEMS.currentPMId);
+		Attribute currentItemName = currentItem.getAt(ItemApi.ATT_NAME);
 
 		assertNull(currentItemName.getValue());
-		assertNull(currentItem.getAt(ATT_GREETING).getValue());
+		assertNull(currentItem.getAt(ItemApi.ATT_GREETING).getValue());
 
 		// Simulate a selection change in a TableView:
-		PresentationModel metaPM = clientDolphin.findPresentationModelById(ITEM_MASTER_DETAIL_ID + META_PM_ID_POSTFIX);
-		metaPM.getAt(ATT_META_CURRENT_PM_ID).setValue(pm0.getId());
+		PresentationModel metaPM = clientDolphin.findPresentationModelById(MASTER_DETAIL_FOR_ITEMS.metaPMId);
+		metaPM.getAt(MasterDetailsApi.ATT_CURRENT_PM_ID).setValue(pm0.getId());
 		assertNull(currentItemName.getValue());
 
 		final CountDownLatch cdl2 = new CountDownLatch(1);
 		clientDolphin.sync(cdl2::countDown);
 		cdl2.await();
-		assertEquals(PM1_NAME, currentItemName.getValue());
+		assertEquals(P1.name, currentItemName.getValue());
 	}
 
 }
