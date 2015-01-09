@@ -11,9 +11,10 @@ import java.util.concurrent.CountDownLatch;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.opendolphin.client.infra.ODLambdaSupport.onFinishedHandler;
-import static org.opendolphin.example.masterdetail.ApplicationConstants.*;
+import static org.opendolphin.example.masterdetail.ApplicationApi.*;
+import static org.opendolphin.example.masterdetail.MasterDetailApi.*;
 
-public class MasterDetailModelTest {
+public class MasterDetailApiModelInitializerTest {
 
 	@Test
 	public void test1() throws Exception {
@@ -28,23 +29,26 @@ public class MasterDetailModelTest {
 		// Access to presentation models:
 		List<PresentationModel> pms = clientDolphin.findAllPresentationModelsByType(ItemApi.ITEM_TYPE);
 		assertEquals(2, pms.size()); // See COMMAND_INIT handler
+
 		PresentationModel pm0 = pms.get(0);
+		String pm0Name = (String) pm0.getAt(ItemApi.ATT_NAME).getValue();
+
 		PresentationModel pm1 = pms.get(1);
-		PresentationModel currentItem = clientDolphin.findPresentationModelById(MASTER_DETAIL_FOR_ITEMS.currentPMId);
+		PresentationModel currentItem = clientDolphin.findPresentationModelById(getCurrentPmId(PM_MASTER_DETAIL_ITEM_ID));
 		Attribute currentItemName = currentItem.getAt(ItemApi.ATT_NAME);
 
 		assertNull(currentItemName.getValue());
 		assertNull(currentItem.getAt(ItemApi.ATT_GREETING).getValue());
 
 		// Simulate a selection change in a TableView:
-		PresentationModel metaPM = clientDolphin.findPresentationModelById(MASTER_DETAIL_FOR_ITEMS.metaPMId);
-		metaPM.getAt(MasterDetailsApi.ATT_CURRENT_PM_ID).setValue(pm0.getId());
+		PresentationModel metaPM = clientDolphin.findPresentationModelById(getMetaPmId(PM_MASTER_DETAIL_ITEM_ID));
+		metaPM.getAt(ATT_CURRENT_PM_ID).setValue(pm0.getId());
 		assertNull(currentItemName.getValue());
 
 		final CountDownLatch cdl2 = new CountDownLatch(1);
 		clientDolphin.sync(cdl2::countDown);
 		cdl2.await();
-		assertEquals(P1.name, currentItemName.getValue());
+		assertEquals(pm0Name, currentItemName.getValue());
 	}
 
 }
