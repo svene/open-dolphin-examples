@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+
+dependencies {
+	compile 'org.open-dolphin:dolphin-combined:0.11'
+	testCompile 'org.open-dolphin-extension:javafxcombined-extension:0.4-SNAPSHOT'
+	compile project(':client')
+	compile project(':server')
+	compile project(':shared')
+
+}
