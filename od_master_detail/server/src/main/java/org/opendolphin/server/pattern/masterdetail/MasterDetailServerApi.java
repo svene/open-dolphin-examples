@@ -1,25 +1,30 @@
-package org.opendolphin.example.masterdetail;
+package org.opendolphin.server.pattern.masterdetail;
 
 import org.opendolphin.core.PresentationModel;
 import org.opendolphin.core.server.DTO;
 import org.opendolphin.core.server.ServerDolphin;
 import org.opendolphin.core.server.ServerPresentationModel;
 import org.opendolphin.core.server.Slot;
+import org.opendolphin.example.masterdetail.GeneralApi;
 
 import java.util.function.Supplier;
 
-import static org.opendolphin.example.masterdetail.shared.MasterDetailApi.*;
+import static org.opendolphin.shared.pattern.masterdetail.MasterDetailApi.*;
 
-public final class MasterDetailModelInitializer {
+public final class MasterDetailServerApi {
 
-	private MasterDetailModelInitializer() {
+	private MasterDetailServerApi() {
 	}
 
-	public static void initialize(ServerDolphin dolphin, String id, String type, Supplier<DTO> dtoSupplier) {
+	public static void createNewMasterDetailModel(ServerDolphin dolphin, String id, String type, Supplier<DTO> dtoSupplier) {
 
-		dolphin.presentationModel(getCurrentPmId(id), GeneralApi.getTechnicalType(type), dtoSupplier.get());
+		createCurrentPM(dolphin, id, type, dtoSupplier);
 		createMetaPM(dolphin, id);
 		addCurrentPMIdHandler(dolphin, id);
+	}
+
+	private static void createCurrentPM(ServerDolphin dolphin, String id, String type, Supplier<DTO> dtoSupplier) {
+		dolphin.presentationModel(getCurrentPmId(id), GeneralApi.getTechnicalType(type), dtoSupplier.get());
 	}
 
 	private static PresentationModel createMetaPM(ServerDolphin dolphin, String id) {

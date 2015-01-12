@@ -9,12 +9,12 @@ import static org.opendolphin.example.masterdetail.shared.ItemApi.*;
 
 public class ItemServerAPI {
 
-	public static DTO newDTO(String name, String greeting) {
-		return new DTO(new Slot(ATT_NAME, name), new Slot(ATT_GREETING, greeting));
+	public static DTO newDTO(String name) {
+		return new DTO(new Slot(ATT_NAME, name) );
 	}
 
 	public static Supplier<DTO> newDTOSupplier() {
-		return () -> newDTO(null, null);
+		return () -> newDTO(null);
 	}
 
 }

@@ -1,4 +1,4 @@
-package org.opendolphin.example.masterdetail.shared;
+package org.opendolphin.shared.pattern.masterdetail;
 
 public class MasterDetailApi {
 
