@@ -1,0 +1,8 @@
+apply plugin: 'java'
+
+
+dependencies {
+	compile project(':shared')
+	compile 'org.open-dolphin:dolphin-client:0.11'
+
+}

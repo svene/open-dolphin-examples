@@ -1,2 +1,6 @@
 rootProject.name = 'od_master_detail'
 
+include 'client'
+include 'server'
+include 'shared'
+include 'development'
