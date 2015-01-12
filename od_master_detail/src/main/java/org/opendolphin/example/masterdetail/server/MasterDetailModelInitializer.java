@@ -1,4 +1,4 @@
-package org.opendolphin.example.masterdetail;
+package org.opendolphin.example.masterdetail.server;
 
 import org.opendolphin.core.PresentationModel;
 import org.opendolphin.core.server.DTO;
@@ -8,7 +8,7 @@ import org.opendolphin.core.server.Slot;
 
 import java.util.function.Supplier;
 
-import static org.opendolphin.example.masterdetail.MasterDetailApi.*;
+import static org.opendolphin.example.masterdetail.shared.MasterDetailApi.*;
 
 public final class MasterDetailModelInitializer {
 

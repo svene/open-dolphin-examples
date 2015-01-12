@@ -1,4 +1,4 @@
-package org.opendolphin.example.masterdetail;
+package org.opendolphin.example.masterdetail.server;
 
 public class GeneralApi {
 

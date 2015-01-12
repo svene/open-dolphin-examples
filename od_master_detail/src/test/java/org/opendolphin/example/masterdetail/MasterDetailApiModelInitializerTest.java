@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.opendolphin.core.Attribute;
 import org.opendolphin.core.PresentationModel;
 import org.opendolphin.core.client.ClientDolphin;
+import org.opendolphin.example.masterdetail.shared.ItemApi;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -11,8 +12,8 @@ import java.util.concurrent.CountDownLatch;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.opendolphin.client.infra.ODLambdaSupport.onFinishedHandler;
-import static org.opendolphin.example.masterdetail.ApplicationApi.*;
-import static org.opendolphin.example.masterdetail.MasterDetailApi.*;
+import static org.opendolphin.example.masterdetail.shared.ApplicationApi.*;
+import static org.opendolphin.example.masterdetail.shared.MasterDetailApi.*;
 
 public class MasterDetailApiModelInitializerTest {
 

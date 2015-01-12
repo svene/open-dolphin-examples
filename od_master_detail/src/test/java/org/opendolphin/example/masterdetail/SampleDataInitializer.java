@@ -1,6 +1,7 @@
 package org.opendolphin.example.masterdetail;
 
 import org.opendolphin.core.server.ServerDolphin;
+import org.opendolphin.example.masterdetail.shared.ItemApi;
 
 public class SampleDataInitializer {
 

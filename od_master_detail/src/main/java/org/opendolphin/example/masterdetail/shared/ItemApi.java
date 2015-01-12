@@ -1,4 +1,4 @@
-package org.opendolphin.example.masterdetail;
+package org.opendolphin.example.masterdetail.shared;
 
 import org.opendolphin.core.server.DTO;
 import org.opendolphin.core.server.Slot;
