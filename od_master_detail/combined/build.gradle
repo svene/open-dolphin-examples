@@ -2,10 +2,8 @@ apply plugin: 'java'
 
 
 dependencies {
-	compile 'org.open-dolphin:dolphin-combined:0.11'
 	// todoo: check why gradle property dolphinExtensionVersion cannot be used
 	testCompile 'org.open-dolphin-extension:combined-extension:0.4-SNAPSHOT'
-	testCompile 'org.open-dolphin-extension:client-extension:0.4-SNAPSHOT'
 	compile project(':client')
 	compile project(':server')
 	compile project(':shared')
