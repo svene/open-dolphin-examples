@@ -5,7 +5,7 @@ import org.opendolphin.core.server.action.DolphinServerAction;
 import org.opendolphin.core.server.comm.ActionRegistry;
 import org.opendolphin.core.server.comm.CommandHandler;
 import org.opendolphin.example.masterdetail.shared.ItemApi;
-import org.opendolphin.server.pattern.masterdetail.MasterDetailServerApi;
+import org.opendolphinx.server.pattern.masterdetail.MasterDetailServerApi;
 
 import static org.opendolphin.example.masterdetail.shared.ApplicationApi.*;
 

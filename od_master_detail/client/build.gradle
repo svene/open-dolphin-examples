@@ -4,5 +4,6 @@ apply plugin: 'java'
 dependencies {
 	compile project(':shared')
 	compile 'org.open-dolphin:dolphin-client:0.11'
+	compile 'org.open-dolphin-extension:shared-extension:0.4-SNAPSHOT'
 
 }

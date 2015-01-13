@@ -2,11 +2,12 @@ package org.opendolphin.example.masterdetail;
 
 import org.junit.Test;
 import org.opendolphin.client.example.masterdetail.Items;
-import org.opendolphin.client.infra.ODJ8Support;
-import org.opendolphin.client.pattern.masterdetail.MasterDetailClientApi;
 import org.opendolphin.core.PresentationModel;
 import org.opendolphin.core.client.ClientDolphin;
 import org.opendolphin.example.masterdetail.shared.ItemApi;
+import org.opendolphinx.client.misc.J8ClientSupport;
+import org.opendolphinx.client.pattern.masterdetail.MasterDetailClientApi;
+import org.opendolphinx.combined.misc.InMemoryClientDolphinProvider;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -45,12 +46,12 @@ public class MasterDetailClientTest {
 	}
 
 	private ClientDolphin initDolphin() throws Exception {
-		XInMemoryClientDolphinProvider dolphin = new XInMemoryClientDolphinProvider(Runnable::run);
+		InMemoryClientDolphinProvider dolphin = new InMemoryClientDolphinProvider(Runnable::run);
 		ClientDolphin clientDolphin = dolphin.getClientDolphin();
 		dolphin.getServerDolphin().register(new ApplicationDirector());
 
 		final CountDownLatch cdl = new CountDownLatch(1);
-		clientDolphin.send(COMMAND_INIT, ODJ8Support.onFinishedHandler(pms -> cdl.countDown()));
+		clientDolphin.send(COMMAND_INIT, J8ClientSupport.onFinishedHandler(pms -> cdl.countDown()));
 		cdl.await();
 
 		return clientDolphin;
