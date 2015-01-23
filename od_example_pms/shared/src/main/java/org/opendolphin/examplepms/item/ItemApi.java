@@ -1,4 +1,4 @@
-package org.opendolphin.example.masterdetail.shared;
+package org.opendolphin.examplepms.item;
 
 public interface ItemApi {
 

@@ -1,0 +1,7 @@
+
+dependencies {
+	compile project(':shared')
+	compile 'org.open-dolphin-extension:client-extension:0.4-SNAPSHOT'
+}
+
+project.archivesBaseName = 'od-example-pms-client'

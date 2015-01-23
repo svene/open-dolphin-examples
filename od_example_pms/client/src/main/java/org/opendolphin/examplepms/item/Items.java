@@ -1,8 +1,7 @@
-package org.opendolphin.client.example.masterdetail;
+package org.opendolphin.examplepms.item;
 
 import org.opendolphin.core.Attribute;
 import org.opendolphin.core.PresentationModel;
-import org.opendolphin.example.masterdetail.shared.ItemApi;
 
 public class Items {
 
