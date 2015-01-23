@@ -1,10 +1,8 @@
-package org.opendolphin.example.masterdetail;
+package org.opendolphin.examplepms.item;
 
 import org.opendolphin.core.server.ServerDolphin;
-import org.opendolphin.examplepms.item.ItemApi;
-import org.opendolphin.examplepms.item.ItemServerAPI;
 
-public class SampleDataInitializer {
+public class ItemSampleDataInitializer {
 
 	public void initialize(ServerDolphin serverDolphin) {
 
