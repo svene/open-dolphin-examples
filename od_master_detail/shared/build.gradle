@@ -1,0 +1,7 @@
+apply plugin: 'java'
+
+
+dependencies {
+	compile 'org.open-dolphin:od-example-pms-shared:0.1-SNAPSHOT'
+
+}

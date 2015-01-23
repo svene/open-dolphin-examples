@@ -4,5 +4,5 @@ apply plugin: 'java'
 dependencies {
 	compile project(':shared')
 	compile 'org.open-dolphin-extension:server-extension:0.4-SNAPSHOT'
-
+	compile 'org.open-dolphin:od-example-pms-server:0.1-SNAPSHOT'
 }

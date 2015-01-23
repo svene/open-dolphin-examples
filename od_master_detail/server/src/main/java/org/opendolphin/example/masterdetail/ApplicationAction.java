@@ -1,27 +1,21 @@
 package org.opendolphin.example.masterdetail;
 
-import org.opendolphin.core.comm.Command;
 import org.opendolphin.core.server.action.DolphinServerAction;
 import org.opendolphin.core.server.comm.ActionRegistry;
-import org.opendolphin.core.server.comm.CommandHandler;
-import org.opendolphin.example.masterdetail.shared.ItemApi;
+import org.opendolphin.examplepms.item.ItemApi;
+import org.opendolphin.examplepms.item.ItemServerAPI;
 import org.opendolphinx.server.pattern.masterdetail.MasterDetailServerApi;
 
-import static org.opendolphin.example.masterdetail.shared.ApplicationApi.*;
-
-import java.util.List;
+import static org.opendolphin.example.masterdetail.shared.ApplicationApi.COMMAND_INIT;
 
 public class ApplicationAction extends DolphinServerAction {
 
 	public void registerIn(ActionRegistry actionRegistry) {
 
-		actionRegistry.register(COMMAND_INIT, new CommandHandler<Command>() {
-			public void handleCommand(Command command, List<Command> response) {
-				MasterDetailServerApi.createNewMasterDetailModel(getServerDolphin(), ItemApi.PM_MASTER_DETAIL_ITEM_ID, ItemApi.ITEM_TYPE, ItemServerAPI.newDTOSupplier());
+		actionRegistry.register(COMMAND_INIT, (command, response) -> {
+			MasterDetailServerApi.createNewMasterDetailModel(getServerDolphin(), ItemApi.PM_MASTER_DETAIL_ITEM_ID, ItemApi.ITEM_TYPE, ItemServerAPI.newDTOSupplier());
 
-				new SampleDataInitializer().initialize(getServerDolphin());
-			}
-
+			new SampleDataInitializer().initialize(getServerDolphin());
 		});
 
 	}

@@ -1,10 +1,10 @@
 package org.opendolphin.example.masterdetail;
 
 import org.junit.Test;
-import org.opendolphin.client.example.masterdetail.Items;
 import org.opendolphin.core.PresentationModel;
 import org.opendolphin.core.client.ClientDolphin;
-import org.opendolphin.example.masterdetail.shared.ItemApi;
+import org.opendolphin.examplepms.item.ItemApi;
+import org.opendolphin.examplepms.item.Items;
 import org.opendolphinx.client.misc.J8ClientSupport;
 import org.opendolphinx.client.pattern.masterdetail.MasterDetailClientApi;
 import org.opendolphinx.combined.misc.InMemoryClientDolphinProvider;
@@ -16,7 +16,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.opendolphin.example.masterdetail.shared.ApplicationApi.COMMAND_INIT;
-import static org.opendolphin.example.masterdetail.shared.ItemApi.PM_MASTER_DETAIL_ITEM_ID;
 
 public class MasterDetailClientTest {
 
@@ -24,7 +23,7 @@ public class MasterDetailClientTest {
 	public void test1() throws Exception {
 		ClientDolphin clientDolphin = initDolphin();
 
-		MasterDetailClientApi masterDetail = new MasterDetailClientApi(clientDolphin, PM_MASTER_DETAIL_ITEM_ID, ItemApi.ITEM_TYPE);
+		MasterDetailClientApi masterDetail = new MasterDetailClientApi(clientDolphin, ItemApi.PM_MASTER_DETAIL_ITEM_ID, ItemApi.ITEM_TYPE);
 
 		// Access to presentation models:
 		List<PresentationModel> pms = masterDetail.findAllPresentationModels();
