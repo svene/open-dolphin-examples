@@ -9,6 +9,6 @@ public class Items {
 		return pm.getAt(ItemApi.ATT_NAME);
 	}
 	public static String getName(PresentationModel pm) {
-		return (String) pm.getAt(ItemApi.ATT_NAME).getValue();
+		return (String) getNameAttribute(pm).getValue();
 	}
 }
