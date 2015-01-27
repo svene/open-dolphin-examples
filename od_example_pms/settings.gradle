@@ -1,0 +1,5 @@
+rootProject.name = 'od_example_pms'
+
+include 'od-example-pms-client'
+include 'od-example-pms-shared'
+include 'od-example-pms-server'
