@@ -4,6 +4,7 @@ build/
 .idea/
 *.iml
 classes/
+.lazybones/
 /od_web_02_remote_mode_jee/target/
 target/
 nb-configuration.xml
