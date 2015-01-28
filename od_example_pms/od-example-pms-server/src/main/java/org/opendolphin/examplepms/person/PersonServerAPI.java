@@ -7,16 +7,20 @@ import java.util.function.Supplier;
 
 public class PersonServerAPI {
 
-	public static DTO newDTO(String firstName, String lastName, String birthday) {
+	public static DTO newDTO(String id, String firstName, String lastName, String birthday) {
 		return new DTO(
-			new Slot(PersonApi.ATT_FIRST_NAME, firstName),
-			new Slot(PersonApi.ATT_LAST_NAME, lastName),
-			new Slot(PersonApi.ATT_BIRTHDAY, birthday)
+			newSlot(id, PersonApi.ATT_FIRST_NAME, firstName),
+			newSlot(id, PersonApi.ATT_LAST_NAME, lastName),
+			newSlot(id, PersonApi.ATT_BIRTHDAY, birthday)
 		);
 	}
 
+	private static Slot newSlot(String id, String propertyName, String value) {
+		return new Slot(propertyName, value, id + "." + propertyName);
+	}
+
 	public static Supplier<DTO> newDTOSupplier() {
-		return () -> newDTO(null, null, null);
+		return () -> newDTO(null, null, null, null);
 	}
 
 }
