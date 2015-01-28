@@ -21,6 +21,14 @@ public class MainContentViewBinder {
 
 		view.personTable.setItems(personPMs);
 
+		// Bind selection change of 'view.personTable' to currentPmId: // todo: add reverse binding
+		MasterDetailClientApi masterDetail = getMasterDetailClientApi(clientDolphin);
+		view.personTable.getSelectionModel().selectedItemProperty().addListener((s, o, n) -> {
+			if (n != null) {
+				masterDetail.setCurrentPMId(n.getId());
+			}
+		});
+
 		view.firstNameColumn.setCellValueFactory(cellData -> new ClientAttributeStringWrapper((ClientAttribute) cellData.getValue().getAt(PersonApi.ATT_FIRST_NAME)));
 		view.lastNameColumn.setCellValueFactory(cellData -> new ClientAttributeStringWrapper((ClientAttribute) cellData.getValue().getAt(PersonApi.ATT_LAST_NAME)));
 
@@ -29,10 +37,16 @@ public class MainContentViewBinder {
 
 
 	public void handleInitializedPMs(ClientDolphin clientDolphin, MainContentView view) {
-		MasterDetailClientApi masterDetail = new MasterDetailClientApi(clientDolphin, PersonApi.PM_MASTER_DETAIL_PERSON_ID, PersonApi.PERSON_TYPE);
+		MasterDetailClientApi masterDetail = getMasterDetailClientApi(clientDolphin);
 		PresentationModel pm0 = masterDetail.findAllPresentationModels().get(0);
 		masterDetail.setCurrentPMId(pm0.getId());
+
+		// Firstname:
 		JFXBinder.bind(PersonApi.ATT_FIRST_NAME).of(masterDetail.getCurrentItem()).to("text").of(view.firstNameTextField);
 		JFXBinder.bind("text").of(view.firstNameTextField).to(PersonApi.ATT_FIRST_NAME).of(masterDetail.getCurrentItem());
+	}
+
+	private MasterDetailClientApi getMasterDetailClientApi(ClientDolphin clientDolphin) {
+		return new MasterDetailClientApi(clientDolphin, PersonApi.PM_MASTER_DETAIL_PERSON_ID, PersonApi.PERSON_TYPE);
 	}
 }
