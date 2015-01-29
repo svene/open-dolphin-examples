@@ -12,6 +12,9 @@ import org.opendolphinx.client.misc.ClientAttributeStringWrapper;
 import org.opendolphinx.client.misc.ModelStoreBinder;
 import org.opendolphinx.client.pattern.masterdetail.MasterDetailClientApi;
 
+import java.util.List;
+import java.util.function.Predicate;
+
 public class MainContentViewBinder {
 
 	public void bindView(ClientDolphin clientDolphin, MainContentView view) {
@@ -22,7 +25,7 @@ public class MainContentViewBinder {
 
 		view.personTable.setItems(personPMs);
 
-		// Bind selection change of 'view.personTable' to currentPmId: // todo: add reverse binding
+		// Bind selection change of 'view.personTable' to currentPmId:
 		MasterDetailClientApi masterDetail = getMasterDetailClientApi(clientDolphin);
 		view.personTable.getSelectionModel().selectedItemProperty().addListener((s, o, n) -> {
 			if (n != null) {
@@ -40,13 +43,35 @@ public class MainContentViewBinder {
 	public void handleInitializedPMs(ClientDolphin clientDolphin, MainContentView view) {
 		MasterDetailClientApi masterDetail = getMasterDetailClientApi(clientDolphin);
 		PresentationModel pm0 = masterDetail.findAllPresentationModels().get(0);
-		masterDetail.setCurrentPMId(pm0.getId());
 
 		bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_FIRST_NAME, view.firstNameTextField);
 		bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_LAST_NAME, view.lastNameTextField);
 		bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_BIRTHDAY, view.birthdayTextField);
 
+
+		masterDetail.getCurrentPMIdAttribute().addPropertyChangeListener(evt -> {
+			if (!(evt.getNewValue() instanceof String)) {
+				return;
+			}
+			String n = (String) evt.getNewValue();
+			int idx = indexForItem(view.personTable.getItems(), pm -> n.equals(pm.getId()));
+			view.personTable.getSelectionModel().select(idx);
+		});
+
+		// Init data: todo (Sven 29.01.15): on server side?
+		masterDetail.setCurrentPMId(pm0.getId());
 	}
+
+	private static <T> int indexForItem(List<T> list, Predicate<T> p) {
+		for (int i = 0; i < list.size(); i++) {
+			T item = list.get(i);
+			if (p.test(item)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
 
 	private void bindTextfield(PresentationModel currentItem, String attribute, TextField textField) {
 		JFXBinder.bind(attribute).of(currentItem).to("text").of(textField);
