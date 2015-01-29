@@ -6,8 +6,8 @@ public class ItemSampleDataInitializer {
 
 	public void initialize(ServerDolphin serverDolphin) {
 
-		serverDolphin.presentationModel("PM1", ItemApi.ITEM_TYPE, ItemServerAPI.newDTO("Sven"));
-		serverDolphin.presentationModel("PM2", ItemApi.ITEM_TYPE, ItemServerAPI.newDTO("Uli"));
+		ItemServerAPI.newPM(serverDolphin, "PM1", "Sven");
+		ItemServerAPI.newPM(serverDolphin, "PM2", "Uli");
 	}
 
 }
