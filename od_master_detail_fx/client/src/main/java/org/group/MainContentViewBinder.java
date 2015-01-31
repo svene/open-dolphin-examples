@@ -1,7 +1,5 @@
 package org.group;
 
-import javafx.scene.control.TextField;
-import org.opendolphin.binding.JFXBinder;
 import org.opendolphin.core.PresentationModel;
 import org.opendolphin.core.client.ClientAttribute;
 import org.opendolphin.core.client.ClientDolphin;
@@ -21,21 +19,21 @@ public class MainContentViewBinder {
 
 		view.firstNameColumn.setCellValueFactory(cellData -> new ClientAttributeStringWrapper((ClientAttribute) cellData.getValue().getAt(PersonApi.ATT_FIRST_NAME)));
 		view.lastNameColumn.setCellValueFactory(cellData -> new ClientAttributeStringWrapper((ClientAttribute) cellData.getValue().getAt(PersonApi.ATT_LAST_NAME)));
+
 	}
-
-
 
 	public void handleInitializedPMs(ClientDolphin clientDolphin, MainContentView view) {
 		MasterDetailClientApi masterDetail = getMasterDetailClientApi(clientDolphin);
-		PresentationModel pm0 = masterDetail.findAllPresentationModels().get(0);
 
 		TextFieldBinder.bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_FIRST_NAME, view.firstNameTextField);
 		TextFieldBinder.bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_LAST_NAME, view.lastNameTextField);
 		TextFieldBinder.bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_BIRTHDAY, view.birthdayTextField);
 
+
 		TableViewBinder.bindTableToMasterDetail2(view.personTable, masterDetail);
 
-		// Init data: todo (Sven 29.01.15): on server side?
+		// Init data: todo (Sven 29.01.15): on server side? -> prepared but TableRow is not selected anymore on startup
+		PresentationModel pm0 = masterDetail.findAllPresentationModels().get(0);
 		masterDetail.setCurrentPMId(pm0.getId());
 	}
 

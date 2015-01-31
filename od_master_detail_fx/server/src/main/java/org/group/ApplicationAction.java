@@ -15,8 +15,12 @@ public class ApplicationAction extends DolphinServerAction{
 
         actionRegistry.register(COMMAND_INIT, (command, response) -> {
 
-            MasterDetailServerApi.createNewMasterDetailModel(getServerDolphin(), PersonApi.PM_MASTER_DETAIL_PERSON_ID, PersonApi.PERSON_TYPE, PersonServerAPI.newDTOSupplier());
+			MasterDetailServerApi masterDetail = new MasterDetailServerApi(getServerDolphin(), PersonApi.PM_MASTER_DETAIL_PERSON_ID, PersonApi.PERSON_TYPE);
+			masterDetail.createNewMasterDetailModel(PersonServerAPI.newDTOSupplier());
+
             new PersonSampleDataInitializer().initialize(getServerDolphin());
+
+//			masterDetail.setCurrentPMId(PersonSampleDataInitializer.PM_1);
         });
 
     }
