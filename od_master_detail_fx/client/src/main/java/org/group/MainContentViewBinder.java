@@ -9,6 +9,7 @@ import org.opendolphin.examplepms.person.PersonApi;
 import org.opendolphinx.client.misc.ClientAttributeStringWrapper;
 import org.opendolphinx.client.pattern.masterdetail.MasterDetailClientApi;
 import org.opendolphinx.client.pattern.masterdetail.TableViewBinder;
+import org.opendolphinx.extension.javafxclient.TextFieldBinder;
 
 public class MainContentViewBinder {
 
@@ -28,20 +29,14 @@ public class MainContentViewBinder {
 		MasterDetailClientApi masterDetail = getMasterDetailClientApi(clientDolphin);
 		PresentationModel pm0 = masterDetail.findAllPresentationModels().get(0);
 
-		bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_FIRST_NAME, view.firstNameTextField);
-		bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_LAST_NAME, view.lastNameTextField);
-		bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_BIRTHDAY, view.birthdayTextField);
-
+		TextFieldBinder.bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_FIRST_NAME, view.firstNameTextField);
+		TextFieldBinder.bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_LAST_NAME, view.lastNameTextField);
+		TextFieldBinder.bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_BIRTHDAY, view.birthdayTextField);
 
 		TableViewBinder.bindTableToMasterDetail2(view.personTable, masterDetail);
 
 		// Init data: todo (Sven 29.01.15): on server side?
 		masterDetail.setCurrentPMId(pm0.getId());
-	}
-
-	private void bindTextfield(PresentationModel currentItem, String attribute, TextField textField) {
-		JFXBinder.bind(attribute).of(currentItem).to("text").of(textField);
-		JFXBinder.bind("text").of(textField).to(attribute).of(currentItem);
 	}
 
 	private MasterDetailClientApi getMasterDetailClientApi(ClientDolphin clientDolphin) {
