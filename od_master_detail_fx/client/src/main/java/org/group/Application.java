@@ -31,16 +31,15 @@ public class Application extends javafx.application.Application {
         stage.setScene(scene);
         stage.show();
 
-        MainContentViewBinder mainContentViewBinder = new MainContentViewBinder();
-        mainContentViewBinder.bindView(clientDolphin, main.getView());
-
-        initializePMs(() -> mainContentViewBinder.handleInitializedPMs(clientDolphin, main.getView()));
+        initializePMs(clientDolphin, main.getView());
 
         stage.show();
     }
 
-    private void initializePMs(Runnable initializedHandler) {
-		clientDolphin.send(COMMAND_INIT, J8ClientSupport.onFinishedHandler( initializedHandler));
+    private void initializePMs(ClientDolphin clientDolphin, MainContentView view) {
+		MainContentViewBinder mainContentViewBinder = new MainContentViewBinder();
+		mainContentViewBinder.bindView(clientDolphin, view);
+		Application.clientDolphin.send(COMMAND_INIT, J8ClientSupport.onFinishedHandler(() -> mainContentViewBinder.handleInitializedPMs(clientDolphin, view)));
     }
 
 }
