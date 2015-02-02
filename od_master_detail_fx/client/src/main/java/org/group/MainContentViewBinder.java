@@ -7,37 +7,25 @@ import org.opendolphinx.client.misc.ClientAttributeStringWrapper;
 import org.opendolphinx.client.pattern.masterdetail.MasterDetailClientApi;
 import org.opendolphinx.client.pattern.masterdetail.TableViewBinder;
 import org.opendolphinx.extension.javafxclient.TextFieldBinder;
-import org.opendolphinx.shared.pattern.masterdetail.MasterDetailApi;
 
 public class MainContentViewBinder {
 
 	public void bindView(ClientDolphin clientDolphin, MainContentView view) {
 
-		MasterDetailClientApi masterDetail = getMasterDetailClientApi(clientDolphin);
+		MasterDetailClientApi masterDetail = new MasterDetailClientApi(clientDolphin, PersonApi.PM_MASTER_DETAIL_PERSON_ID, PersonApi.PERSON_TYPE);
+		masterDetail.addInitializedHandler(() -> handleInitializedPMs(view, masterDetail));
+	}
+
+	public void handleInitializedPMs(MainContentView view, MasterDetailClientApi masterDetail) {
 
 		TableViewBinder.bindTableToMasterDetail(view.personTable, masterDetail);
 
 		view.firstNameColumn.setCellValueFactory(cellData -> new ClientAttributeStringWrapper((ClientAttribute) cellData.getValue().getAt(PersonApi.ATT_FIRST_NAME)));
 		view.lastNameColumn.setCellValueFactory(cellData -> new ClientAttributeStringWrapper((ClientAttribute) cellData.getValue().getAt(PersonApi.ATT_LAST_NAME)));
 
-		clientDolphin.getModelStore().addModelStoreListener(MasterDetailApi.TYPE_MASTER_DETAIL_META, event -> {
-			System.out.println("***** meta PM available");
-			handleInitializedPMs(clientDolphin, view);
-		});
-
-	}
-
-	public void handleInitializedPMs(ClientDolphin clientDolphin, MainContentView view) {
-		MasterDetailClientApi masterDetail = getMasterDetailClientApi(clientDolphin);
-
 		TextFieldBinder.bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_FIRST_NAME, view.firstNameTextField);
 		TextFieldBinder.bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_LAST_NAME, view.lastNameTextField);
 		TextFieldBinder.bindTextfield(masterDetail.getCurrentItem(), PersonApi.ATT_BIRTHDAY, view.birthdayTextField);
-
-		TableViewBinder.bindTableToMasterDetail2(view.personTable, masterDetail);
 	}
 
-	private MasterDetailClientApi getMasterDetailClientApi(ClientDolphin clientDolphin) {
-		return new MasterDetailClientApi(clientDolphin, PersonApi.PM_MASTER_DETAIL_PERSON_ID, PersonApi.PERSON_TYPE);
-	}
 }
