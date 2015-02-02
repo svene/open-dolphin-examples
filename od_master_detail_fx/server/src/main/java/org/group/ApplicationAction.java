@@ -20,7 +20,7 @@ public class ApplicationAction extends DolphinServerAction{
 
             new PersonSampleDataInitializer().initialize(getServerDolphin());
 
-//			masterDetail.setCurrentPMId(PersonSampleDataInitializer.PM_1);
+			masterDetail.setCurrentPMId(PersonSampleDataInitializer.PM_1);
         });
 
     }

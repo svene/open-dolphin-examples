@@ -7,7 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.opendolphin.core.client.ClientDolphin;
-import org.opendolphinx.client.misc.J8ClientSupport;
 import org.svenehrke.javafxextensions.fxml.FXMLLoader2;
 import org.svenehrke.javafxextensions.fxml.ViewAndRoot;
 
@@ -39,7 +38,7 @@ public class Application extends javafx.application.Application {
     private void initializePMs(ClientDolphin clientDolphin, MainContentView view) {
 		MainContentViewBinder mainContentViewBinder = new MainContentViewBinder();
 		mainContentViewBinder.bindView(clientDolphin, view);
-		Application.clientDolphin.send(COMMAND_INIT, J8ClientSupport.onFinishedHandler(() -> mainContentViewBinder.handleInitializedPMs(clientDolphin, view)));
+		Application.clientDolphin.send(COMMAND_INIT);
     }
 
 }
