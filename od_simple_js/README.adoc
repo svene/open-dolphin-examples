@@ -4,6 +4,13 @@
 Simple _Hello world_ example using HTML and Javascript as client.
 Therefore only the modules _server_, _shared_ and _webapp_ are needed.
 
+== Usage
+
+* clone repo
+* `cd webapp`
+* `./gradlew :appRun`
+* point your browser to http://localhost:8080/appContext/hellodolphin.jsp
+
 == opendolphin.js as artifact
 
 `opendolphin-<version>.js` is downloaded automatically on the fly during the
