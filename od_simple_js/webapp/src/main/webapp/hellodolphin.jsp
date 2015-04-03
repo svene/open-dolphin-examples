@@ -9,8 +9,13 @@
 	<link rel="stylesheet" href="bootstrap/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css">
 
     <title>Hello Dolphin</title>
-    <!-- see build.gradle on how js artifacts are downloaded -->
+
+    <!-- Reference opendolphin.js: see build.gradle on how js artifacts are downloaded -->
     <script type="text/javascript" src="generated/js/dolphin/opendolphin-0.12.0B1.js"></script>
+    <!-- Alternative using a direct reference to bintray. I am not sure if this is a good idea bc. bintray is not intended to be a CDN and possible CORS issues:
+    <script type="text/javascript" src="http://dl.bintray.com/opendolphin/resources/opendolphin-0.12.0B1.js"></script>
+    -->
+
     <script type="text/javascript" src="js/app/api.js.jsp"></script>
 
     
