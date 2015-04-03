@@ -1,0 +1,21 @@
+= Simple AngularJS Example
+
+Simple _Hello world_ example using HTML and Javascript and AngularJS as client.
+Therefore only the modules _server_, _shared_ and _webapp_ are needed.
+
+It also demonstrates how https://github.com/canoo/open-dolphin-ng[open-dolphin-ng] is used in form of
+a webjar from https://bintray.com/opendolphin/mavenrepo/open-dolphin-ng/view[bintray]
+
+== Usage
+
+* clone repo
+* `cd webapp`
+* `./gradlew :appRun`
+* point your browser to http://localhost:8080/appContext/helloangular.jsp
+
+You can verify that the JSP is referring to the webjar and not to a locally installed version of _open-dolphin-ng_
+by opening up your browser's development tools and inspect the network activity. You should find a GET request to
+
+http://localhost:8080/appContext/webjars/org/opendolphin/0.12.0B1/opendolphin-ng.js
+
+`opendolphin-ng.js` is contained inside `open-dolphin-ng-0.12.B1.jar` which is defined as dependency in `webapp/build.gradle`.
