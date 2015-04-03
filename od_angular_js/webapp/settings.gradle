@@ -1,3 +1,4 @@
+rootProject.name = 'od_angular_js_webapp'
 
 includeFrom 'shared', '../shared'
 includeFrom 'server', '../server'
