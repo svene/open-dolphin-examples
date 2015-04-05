@@ -1,0 +1,39 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath "org.akhikhl.gretty:gretty:1.1.8"
+  }
+}
+
+apply plugin : 'war'
+apply plugin: 'org.akhikhl.gretty'
+
+repositories {
+    mavenCentral()
+    maven { url 'http://dl.bintray.com/opendolphin/mavenrepo' }
+    mavenLocal()
+	}
+}
+
+configurations {
+	opendolphinjs
+}
+
+dependencies {
+    compile project(':server')
+    compile project(':shared')
+    compile 'org.open-dolphin:open-dolphin-client-javascript:0.12.0B2'
+}
+
+war {
+    archiveName='application.war'
+}
+
+gretty {
+  contextPath = '/appContext'
+  //port = 8081
+  scanInterval = 2
+}
+
