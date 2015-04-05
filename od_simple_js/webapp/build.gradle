@@ -53,4 +53,5 @@ project.afterEvaluate {
 	// do to how the gretty plugin is implemented. Therefore it is done in this 'project.afterEvaluate':
 
 	[appRun, appRunWar, war]*.dependsOn fetchWebappArtifacts
+  clean.dependsOn cleanFetchWebappArtifacts
 }
