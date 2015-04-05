@@ -1,5 +1,5 @@
 
-= Simple JS
+= Simple JS using webjars
 
 Simple _Hello world_ example using HTML and Javascript as client.
 Therefore only the modules _server_, _shared_ and _webapp_ are needed.
@@ -13,79 +13,12 @@ Therefore only the modules _server_, _shared_ and _webapp_ are needed.
 
 == opendolphin.js as artifact
 
-`opendolphin-<version>.js` is downloaded automatically on the fly during the
-build process from https://bintray.com/opendolphin/resources/opendolphin/view#files[bintray].
+`opendolphin-<version>.js` is used via webjar (see dependency in build.gradle: compile 'org.open-dolphin:client-javascript:0.12.0B2')
 This way javascript resources can be used from our gradle build process
 just like mavenrepository artifacts (usually jar files).
 And this also means that we do not have to pollute our source repositories anymore with these artifacts.
 
-To be able to do this in your project you need to apply some changes to your `build.gradle` file:
-
-[source,groovy]
-.webapp/build.gradle
-----
-buildscript {
-  repositories {
-    jcenter()
-  }
-  dependencies {
-    classpath "org.akhikhl.gretty:gretty:1.1.8"
-  }
-}
-
-apply plugin : 'war'
-apply plugin: 'org.akhikhl.gretty'
-
-repositories {
-  mavenCentral()
-  mavenLocal()
-  ivy { // <1>
-    name 'OpenDolphinJS'
-    url 'http://dl.bintray.com/opendolphin/resources/'
-    layout 'pattern', {
-      artifact '[module]-[revision](.[classifier]).[ext]'
-    }
-  }
-}
-
-configurations {
-  opendolphinjs // <2>
-}
-
-dependencies {
-  compile project(':server')
-  compile project(':shared')
-  opendolphinjs group: 'opendolphin', name: 'opendolphin', version: "$dolphinJS_version", ext: 'js'
-}
-
-task fetchWebappArtifacts(type: Copy) { // <3>
-  from configurations.opendolphinjs
-  into "$webAppDir/generated/js/dolphin/"
-}
-
-war {
-  archiveName='application.war'
-}
-
-gretty {
-  contextPath = '/appContext'
-  //port = 8081
-  scanInterval = 2
-}
-
-project.afterEvaluate { // <4>
-  // Let gretty-tasks depend on 'fetchWebappArtifacts'. Note: this cannot be done with:
-  //  tasks.findAll { task -> ['appRun', 'appRunWar', 'war'].contains(task.name) }*.dependsOn fetchWebappArtifacts
-  // do to how the gretty plugin is implemented. Therefore it is done in this 'project.afterEvaluate':
-
-  [appRun, appRunWar, war]*.dependsOn fetchWebappArtifacts
-}
-----
-<1> add a repository definition to opendolphin on bintray `webapp/build.gradle`
-<2> add a configuration for the artifacts
-<3> add a new task `fetchWebappArtifacts` which downloads the artifacts
-<4> let existing tasks like `war` depende on the new task.
-
+BTW: bootstrap is used via webjar as well.
 
 == Additional Info
 
