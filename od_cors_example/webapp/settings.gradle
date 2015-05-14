@@ -1,0 +1,16 @@
+rootProject.name = 'od_cors_example'
+
+includeFrom 'shared', '../shared'
+includeFrom 'server', '../server'
+includeFrom 'standalone_client', '../standalone_client'
+
+def includeFrom(String name, String path, String buildFilename = null) {
+	include ":${name}"
+	ProjectDescriptor projectDescriptor = project(":${name}")
+	projectDescriptor.projectDir = new File(path)
+	if (buildFilename) {
+		projectDescriptor.buildFileName = buildFilename
+	}
+	
+}
+
