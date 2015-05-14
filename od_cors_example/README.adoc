@@ -1,0 +1,95 @@
+= Example showing how to use opendolphin.js in CORS mode
+
+== Development in IntelliJ:
+
+in IntelliJ IDEA: open `webapp/build.gradle`
+
+== Usage
+
+* open a terminal in the `webapp` subfolder and invoke `./gradlew :appRun`
+which will start the server at: `http://localhost:8080/appContext`
+
+=== Same Origin
+
+This is how we usually operate OpenDolphin webapps: serve the html resource from the same server the functionality is running on.
+
+* Point your browser to: http://localhost:8080/appContext/sameorigin.html
+
+This will show the _Hello world_ example you might know from the https://github.com/canoo/open-dolphin-lazybones-templates[OpenDolphin Lazybones Templates]
+and everything works as expected.
+
+=== CORS mode
+
+When you open _sameorigin.html_ as *local file*:
+
+file:///<LOCAL-PATH-TO-MY-GITHUB>/open-dolphin-examples/od_cors_example/webapp/src/main/webapp/sameorigin.html
+
+the page *does not work* as expected and if you inspect the network requests in your browser's developer tools you can see that
+it sends a request header value *`null` for `origin`*.
+This already is a CORS request and `null` is used as _origin_ by the browser because the request is issued from a local file.
+
+=== Separate Client
+
+Say you would like to run your HTML client separate from the server.
+
+A reasons for this could be to be able to strictly separate the business functionality from the client.
+Think of the business functionality of a public API.
+For this API all kinds of clients could be written which run against this API.
+Most likely one does not want to integrate all these clients in the same project as the server API.
+
+To simulate this when you open the file `standalone_client/sameorigin.html` through IntelliJ IDEA
+it will be served through it's own webserver IntelliJ is creating for us:
+
+http://localhost:63342/od_cors_example/standalone_client/sameorigin.html
+
+(The port might be different on your machine)
+
+Alternatively you can create a simple python webserver like this: `python -m SimpleHTTPServer 63342`
+
+As you will see the page still does not work as _localhost:63342_ is different from _localhost:8080_ and therefore violates the
+Same Origin Principle (SOP).
+
+Now point your browser to `http://localhost:63342/od_cors_example/standalone_client/sc_cors.html` and you will see that it works
+because it is CORS enabled.
+
+Let's see how this can be done.
+
+==== Enable CORS
+
+When you compare `standalone_client/sameorigin.html` against `standalone_client/sc_cors.html`
+you see that the only difference are two additional parameters (...300, true) for the opendolphin creation:
+----
+var dolphin = opendolphin.dolphin(odConfig.DOLPHIN_URL, true, 300, true);
+----
+
+The important one is the last _true_ which enables CORS support in opendolphinJS.
+
+Then you have to enable CORS on the server. In `web.xml` you have to add the CORS servlet filter:
+
+[source,xml]
+----
+    <filter>
+        <filter-name>corsFilter</filter-name>
+        <filter-class>com.mycompany.CorsFilter</filter-class>
+        <init-param>
+            <param-name>origin-whitelist</param-name>
+            <param-value>http://localhost:63342,null</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>corsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+----
+
+Note that you have to configure the *origin whitelist* as parameter of the servlet filter.
+This list must contain the *URLs for the client applications* which want to use the server.
+It also contains _null_ such that also local files work: if you open `sc_cors.html` as file the page is working as expected.
+
+Inspect the request and response headers in your browser's development tools to gain a deeper insight in the CORS communication.
+
+The last example is _sc_cors_clientside_dolphinjs.html_ which is the same as _sc_corse.html_ but uses _opendolphin.js_ from itself (the client server)
+and not from the API server.
+
+
