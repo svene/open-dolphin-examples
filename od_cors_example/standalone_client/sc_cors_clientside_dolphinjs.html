@@ -63,7 +63,7 @@
 
 
         // Get PMs and attributes:
-        var dolphin = opendolphin.makeDolphin().url(odConfig.DOLPHIN_URL).reset(true).cors(true).build();
+        var dolphin = opendolphin.makeDolphin().url(odConfig.DOLPHIN_URL).reset(true).build();
 
         dolphin.send(ODAPI.COMMAND_INIT, {
             onFinished: function(pms) {
