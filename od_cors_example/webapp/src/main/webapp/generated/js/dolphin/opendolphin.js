@@ -1577,11 +1577,11 @@ var opendolphin;
             this.http = new XMLHttpRequest();
             this.sig = new XMLHttpRequest();
             if ("withCredentials" in this.http) {
-                this.http.withCredentials = true;
+                this.http.withCredentials = true; // NOTE: doing this for non CORS requests has no impact
                 this.sig.withCredentials = true;
             }
             // NOTE: Browser might support CORS partially so we simply try to use 'this.http' for CORS requests instead of forbidding it
-            //! NOTE: XDomainRequest for IE 8, IE 9 not supported by dolphin because XDomainRequest does not support cookies in CORS requests (which are needed for the JSESSIONID cookie)
+            // NOTE: XDomainRequest for IE 8, IE 9 not supported by dolphin because XDomainRequest does not support cookies in CORS requests (which are needed for the JSESSIONID cookie)
             this.codec = new opendolphin.Codec();
             if (reset) {
                 this.invalidate();
