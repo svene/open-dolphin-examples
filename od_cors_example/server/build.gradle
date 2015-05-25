@@ -13,7 +13,7 @@ repositories {
 dependencies {
 	compile project(':shared')
     compile "org.open-dolphin:dolphin-server:$dolphinVersion"
-    compile 'javax.servlet:servlet-api:2.5'
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
