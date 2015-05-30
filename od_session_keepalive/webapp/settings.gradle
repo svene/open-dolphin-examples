@@ -1,0 +1,15 @@
+rootProject.name = 'webonly_session_keepalive'
+
+includeFrom 'shared', '../shared'
+includeFrom 'server', '../server'
+
+def includeFrom(String name, String path, String buildFilename = null) {
+	include ":${name}"
+	ProjectDescriptor projectDescriptor = project(":${name}")
+	projectDescriptor.projectDir = new File(path)
+	if (buildFilename) {
+		projectDescriptor.buildFileName = buildFilename
+	}
+	
+}
+

@@ -1,0 +1,36 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath "org.akhikhl.gretty:gretty:1.1.8"
+  }
+}
+
+apply plugin : 'war'
+apply plugin: 'org.akhikhl.gretty'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+configurations {
+	opendolphinjs
+}
+
+dependencies {
+    compile project(':server')
+    compile project(':shared')
+    compile 'org.webjars:bootstrap:3.3.1'
+}
+
+war {
+    archiveName='application.war'
+}
+
+gretty {
+  contextPath = '/appContext'
+  //port = 8081
+  scanInterval = 2
+}
