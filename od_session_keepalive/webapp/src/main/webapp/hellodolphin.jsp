@@ -61,11 +61,7 @@
 
         // Get PMs and attributes:
         var errorHandler = function (evt) {
-            alert("XDA could not fetch " + evt.url
-                + ", httpStatus: " + evt.httpStatus
-                + ", exceptionClass: " + evt.exceptionClass
-                + ", exceptionMessage: " + evt.exceptionMessage
-            );
+            alert("Could not fetch " + evt.url + ", httpStatus: " + evt.httpStatus);
         };
 
         var dolphin = opendolphin.makeDolphin()
@@ -80,14 +76,15 @@
             }
         });
 
-        setInterval(function() {
-            console.log("** pingsession", new Date());
-            var http = new XMLHttpRequest();
-            http.open('GET', "/appContext/pingsession", true);
-            http.send();
-        }, 1000 * 10);
-
-
+        var sessionPingEnabled = true;
+        if (sessionPingEnabled) {
+            setInterval(function() {
+                console.log("** pingsession", new Date());
+                var http = new XMLHttpRequest();
+                http.open('GET', "/appContext/pingsession", true);
+                http.send();
+            }, 1000 * 10); // every 10 seconds
+        }
 
     </script>
 

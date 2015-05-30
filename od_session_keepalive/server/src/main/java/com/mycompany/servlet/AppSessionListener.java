@@ -5,10 +5,10 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 @WebListener
-public class AppSessionInitializer implements HttpSessionListener {
+public class AppSessionListener implements HttpSessionListener {
 	@Override
 	public void sessionCreated(HttpSessionEvent se) {
-		System.out.println("=== AppSessionInitializer.sessionCreated");
+		System.out.println("===>>> AppSessionInitializer.sessionCreated");
 	}
 
 	@Override
