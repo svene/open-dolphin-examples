@@ -1,113 +1,83 @@
-= Keep Session alive
+= Errorhandling
 
 == Development
 
 IntelliJ IDEA: open webapp/build.gradle
 
-== Usage without keepalive
+== Usage
 
 * open a terminal and cd to the _webapp_ folder.
 * invoke `./gradlew :appRun`
 * point your browser to _http://localhost:8080/appContext/hellodolphin.jsp_
 * Click on the _Greet_ button and the webpage should work as expected
-* without further interacting with the browser watch the termincal until you see the line
-----
-<<<== AppSessionInitializer.sessionDestroyed
-----
+* Now enter _tryboom_ into the textfield, click the _Greet_ button which should result into the message: _Exception caught: boom_
 
-* Click the _Greet_button again and now you should see a popup with an errormessage _Could not fetch /appContext/dolphin/, httpStatus: 500_
+Note that an exception has been thrown during the Action's execution but also caught by the Action.
+Therefore the application continues to work as expected.
+Now we will cause the Action to throw an exception without catching it.
 
-From this point in time the _Greet_ button will not work anymore since the HTTP session on the server side got destroyed.
+* Enter _boom_ into the textfield, click the _Greet_ button. A dialog will appear which says _Could not fetch /appContext/dolphin/, kind: application, httpStatus: 500_
 
-Let's fix this.
+Note that at this point in time the application is broken.
 
-== Usage with keepalive
-
-* in _webapp/src/main/webapp/hellodolphin.jsp_ find the line
-
-----
-var sessionPingEnabled = false;
-----
-
-and set _sessionPingEnabled_ to _true_ instead of _false_.
-
-* Reload the page in the browser.
-* Watch the terminal and you will see messages like this every 10 seconds:
-----
-HttpSessionKeepAliveServlet.doGet: keeping session alive: Sat May 30 23:37:07 CEST 2015
-----
-* Watch your browser's console and you will see messages like this every 10 seconds:
-----
-pingsession Sat May 30 2015 23:37:07 GMT+0200 (CEST)
-----
-
-* Note that the _Greet_ button will be working even after one minute of no interaction with the browser.
 
 == How it works
 
-In _web.xml_ we defined a session timeout of 1 minute:
-
-[source,xml]
-.web.xml
-----
-  <session-config>
-    <session-timeout>1</session-timeout>
-  </session-config>
-----
-
-The short timeout of one minute serves for demonstration purposes to get feedback quickly.
-We use a _HttpSessionListener_ to report on the terminal when sessions are created and when they are destroyed:
-
-[source,java]
-.AppSessionListener
-----
-@WebListener
-public class AppSessionListener implements HttpSessionListener {
-	@Override
-	public void sessionCreated(HttpSessionEvent se) {
-		System.out.println("===>>> AppSessionInitializer.sessionCreated");
-	}
-
-	@Override
-	public void sessionDestroyed(HttpSessionEvent se) {
-		System.out.println("<<<== AppSessionInitializer.sessionDestroyed");
-	}
-}
-----
-
-Then we have a special servlet which will keep the session alive when called before the timeout happens:
-
-[source,java]
-----
-@WebServlet("/pingsession")
-public class HttpSessionKeepAliveServlet extends HttpServlet {
-
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    System.out.println("** HttpSessionKeepAliveServlet.doGet: keeping session alive: " + new Date());
-    req.getSession(false); // no need to create a new session if there is none since we only want to keep the existing session alive
-  }
-}
-
-----
-
-This servlet will be called from the client every 10 seconds:
+On the client side we register an errorhandler when OpenDolphin is initialized:
 
 [source,javascript]
 .hellodolphin.jsp
 ----
-var sessionPingEnabled = true;
-if (sessionPingEnabled) {
-  setInterval(function() {
-    console.log("** pingsession", new Date());
-    var http = new XMLHttpRequest();
-    http.open('GET', "/appContext/pingsession", true);
-    http.send();
-  }, 1000 * 10); // every 10 seconds
-}
+var errorHandler = function (evt) {
+  alert("Could not fetch " + evt.url
+    + ", kind: " + evt.kind
+    + ", httpStatus: " + evt.httpStatus
+  );
+};
+
+var dolphin = opendolphin.makeDolphin()
+  .url(odConfig.DOLPHIN_URL)
+  .reset(true)
+  .errorHandler(errorHandler)
+  .build();
 ----
 
-For this demo we kept the session timeouts very low so that we did not have to wait forerver.
-But for your own application you will want to set them higher.
-For example you could set the timeout to 6 minutes in _web.xml_ and the repeat the ping every five minutes in _hellodolphin.jsp_.
+In the action we check the value of the _name_ attribute.
+When it is _tryboom_ an exception is thrown in _checkName()_ (in a real application this routine is in a deep nested place) but caught by the action.
+When it is just _boom_ an exception is thrown but not caught by the action.
+In the first case the application continues to work in the second it is broken.
 
+[source,java]
+.ApplicationAction
+----
+actionRegistry.register(ApplicationConstants.COMMAND_GREET, (command, response) -> {
+    String name = (String) getServerDolphin().getAt(PM_APP).getAt(ATT_NAME).getValue();
+    ServerAttribute greeting = getServerDolphin().getAt(PM_APP).getAt(ATT_GREETING);
+
+    // Use 'tryboom' as name to throw exception outside of try/catch:
+    if (! name.startsWith("try")) {
+      checkName(name);
+    }
+
+    // Use 'boom' as name to throw exception inside of try/catch:
+    try {
+      checkName(name);
+      greeting.setValue("Hey " + name + " !");
+    } catch (Exception e) {
+      greeting.setValue("Exception caught: " + e.getMessage());
+    }
+  }
+});
+
+...
+
+  private void checkName(String name) {
+    if (name.contains("boom")) {
+      throw new RuntimeException("boom");
+    }
+  }
+
+----
+
+An exception occuring during the execution of an action should not break the whole application.
+Therefore I think at the moment it is probably the best thing to put a try/catch block around an action's implementation.

@@ -64,8 +64,6 @@
             alert("Could not fetch " + evt.url
                 + ", kind: " + evt.kind
                 + ", httpStatus: " + evt.httpStatus
-//                + ", exceptionClass: " + evt.exceptionClass
-//                + ", exceptionMessage: " + evt.exceptionMessage
             );
         };
 
