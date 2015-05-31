@@ -62,9 +62,11 @@
         // Get PMs and attributes:
         var errorHandler = function (evt) {
             alert("Could not fetch " + evt.url
-                + ", kind: " + evt.kind
-                + ", httpStatus: " + evt.httpStatus
+                + ",\nkind: " + evt.kind
+                + ",\nhttpStatus: " + evt.httpStatus
+                + ",\n\nReloading page"
             );
+            window.location.reload();
         };
 
         var dolphin = opendolphin.makeDolphin()
