@@ -1,0 +1,113 @@
+= Keep Session alive
+
+== Development
+
+IntelliJ IDEA: open webapp/build.gradle
+
+== Usage without keepalive
+
+* open a terminal and cd to the _webapp_ folder.
+* invoke `./gradlew :appRun`
+* point your browser to _http://localhost:8080/appContext/hellodolphin.jsp_
+* Click on the _Greet_ button and the webpage should work as expected
+* without further interacting with the browser watch the termincal until you see the line
+----
+<<<== AppSessionInitializer.sessionDestroyed
+----
+
+* Click the _Greet_button again and now you should see a popup with an errormessage _Could not fetch /appContext/dolphin/, httpStatus: 500_
+
+From this point in time the _Greet_ button will not work anymore since the HTTP session on the server side got destroyed.
+
+Let's fix this.
+
+== Usage with keepalive
+
+* in _webapp/src/main/webapp/hellodolphin.jsp_ find the line
+
+----
+var sessionPingEnabled = false;
+----
+
+and set _sessionPingEnabled_ to _true_ instead of _false_.
+
+* Reload the page in the browser.
+* Watch the terminal and you will see messages like this every 10 seconds:
+----
+HttpSessionKeepAliveServlet.doGet: keeping session alive: Sat May 30 23:37:07 CEST 2015
+----
+* Watch your browser's console and you will see messages like this every 10 seconds:
+----
+pingsession Sat May 30 2015 23:37:07 GMT+0200 (CEST)
+----
+
+* Note that the _Greet_ button will be working even after one minute of no interaction with the browser.
+
+== How it works
+
+In _web.xml_ we defined a session timeout of 1 minute:
+
+[source,xml]
+.web.xml
+----
+  <session-config>
+    <session-timeout>1</session-timeout>
+  </session-config>
+----
+
+The short timeout of one minute serves for demonstration purposes to get feedback quickly.
+We use a _HttpSessionListener_ to report on the terminal when sessions are created and when they are destroyed:
+
+[source,java]
+.AppSessionListener
+----
+@WebListener
+public class AppSessionListener implements HttpSessionListener {
+	@Override
+	public void sessionCreated(HttpSessionEvent se) {
+		System.out.println("===>>> AppSessionInitializer.sessionCreated");
+	}
+
+	@Override
+	public void sessionDestroyed(HttpSessionEvent se) {
+		System.out.println("<<<== AppSessionInitializer.sessionDestroyed");
+	}
+}
+----
+
+Then we have a special servlet which will keep the session alive when called before the timeout happens:
+
+[source,java]
+----
+@WebServlet("/pingsession")
+public class HttpSessionKeepAliveServlet extends HttpServlet {
+
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    System.out.println("** HttpSessionKeepAliveServlet.doGet: keeping session alive: " + new Date());
+    req.getSession(false); // no need to create a new session if there is none since we only want to keep the existing session alive
+  }
+}
+
+----
+
+This servlet will be called from the client every 10 seconds:
+
+[source,javascript]
+.hellodolphin.jsp
+----
+var sessionPingEnabled = true;
+if (sessionPingEnabled) {
+  setInterval(function() {
+    console.log("** pingsession", new Date());
+    var http = new XMLHttpRequest();
+    http.open('GET', "/appContext/pingsession", true);
+    http.send();
+  }, 1000 * 10); // every 10 seconds
+}
+----
+
+For this demo we kept the session timeouts very low so that we did not have to wait forerver.
+But for your own application you will want to set them higher.
+For example you could set the timeout to 6 minutes in _web.xml_ and the repeat the ping every five minutes in _hellodolphin.jsp_.
+
