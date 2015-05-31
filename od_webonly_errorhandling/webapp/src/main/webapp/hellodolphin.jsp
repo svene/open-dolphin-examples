@@ -64,7 +64,8 @@
             alert("Could not fetch " + evt.url
                 + ",\nkind: " + evt.kind
                 + ",\nhttpStatus: " + evt.httpStatus
-                + ",\n\nReloading page"
+                + ",\nmessage: " + evt.message
+                + "\n\nReloading page"
             );
             window.location.reload();
         };

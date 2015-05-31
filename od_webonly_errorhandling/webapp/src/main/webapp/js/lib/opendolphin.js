@@ -92,12 +92,7 @@ var opendolphin;
         };
         Codec.prototype.decode = function (transmitted) {
             if (typeof transmitted == 'string') {
-                if (transmitted == "") {
-                    return [];
-                }
-                else {
-                    return JSON.parse(transmitted);
-                }
+                return JSON.parse(transmitted);
             }
             else {
                 return transmitted;
@@ -1597,9 +1592,7 @@ var opendolphin;
         HttpTransmitter.prototype.transmit = function (commands, onDone) {
             var _this = this;
             this.http.onerror = function (evt) {
-                if (_this.errorHandler) {
-                    _this.errorHandler({ kind: 'onerror', url: _this.url, httpStatus: _this.http.status });
-                }
+                _this.handleError('onerror', "");
                 onDone([]);
             };
             this.http.onreadystatechange = function (evt) {
@@ -1609,30 +1602,23 @@ var opendolphin;
                         if (responseText.trim().length > 0) {
                             try {
                                 var responseCommands = _this.codec.decode(responseText);
+                                onDone(responseCommands);
                             }
                             catch (err) {
-                                console.log(err);
+                                console.log("Error occurred parsing responseText: ", err);
+                                console.log("Incorrect responseText: ", responseText);
+                                _this.handleError('application', "HttpTransmitter: Incorrect responseText: " + responseText);
+                                onDone([]);
                             }
-                            onDone(responseCommands);
                         }
                         else {
-                            if (_this.errorHandler) {
-                                _this.errorHandler({
-                                    kind: 'application',
-                                    url: _this.url,
-                                    httpStatus: _this.http.status
-                                });
-                            }
+                            _this.handleError('application', "HttpTransmitter: empty responseText");
+                            onDone([]);
                         }
                     }
                     else {
-                        if (_this.errorHandler) {
-                            _this.errorHandler({
-                                kind: 'application',
-                                url: _this.url,
-                                httpStatus: _this.http.status
-                            });
-                        }
+                        _this.handleError('application', "HttpTransmitter: HTTP Status != 200");
+                        onDone([]);
                     }
                 }
             };
@@ -1641,6 +1627,15 @@ var opendolphin;
                 this.http.overrideMimeType("application/json; charset=" + this.charset); // todo make injectable
             }
             this.http.send(this.codec.encode(commands));
+        };
+        HttpTransmitter.prototype.handleError = function (kind, message) {
+            var errorEvent = { kind: kind, url: this.url, httpStatus: this.http.status, message: message };
+            if (this.errorHandler) {
+                this.errorHandler(errorEvent);
+            }
+            else {
+                console.log("Error occurred: ", errorEvent);
+            }
         };
         HttpTransmitter.prototype.signal = function (command) {
             this.sig.open('POST', this.url, true);
