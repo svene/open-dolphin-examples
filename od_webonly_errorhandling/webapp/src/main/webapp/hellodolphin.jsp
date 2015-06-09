@@ -67,7 +67,7 @@
                 + ",\nmessage: " + evt.message
                 + "\n\nReloading page"
             );
-            window.location.reload();
+//            window.location.reload();
         };
 
         var dolphin = opendolphin.makeDolphin()

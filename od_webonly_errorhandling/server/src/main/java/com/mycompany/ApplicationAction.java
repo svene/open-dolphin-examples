@@ -26,12 +26,12 @@ public class ApplicationAction extends DolphinServerAction{
             ServerAttribute greeting = getServerDolphin().getAt(PM_APP).getAt(ATT_GREETING);
 
 
-			// Use 'tryboom' as name to throw exception outside of try/catch:
+			// Use 'boom' as name to throw exception outside of try/catch:
 			if (! name.startsWith("try")) {
 				checkName(name);
 			}
 
-			// Use 'boom' as name to throw exception inside of try/catch:
+			// Use 'tryboom' as name to throw exception inside of try/catch:
             try {
 				checkName(name);
 				greeting.setValue("Hey " + name + " !");
