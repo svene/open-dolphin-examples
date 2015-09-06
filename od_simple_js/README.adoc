@@ -13,7 +13,7 @@ Therefore only the modules _server_, _shared_ and _webapp_ are needed.
 
 == Additional Info
 
-`opendolphin-<version>.js` is accessed directoly from `hellodolphin.jsp` from https://bintray.com/opendolphin/resources/opendolphin/view#files[bintray].
+`opendolphin-<version>.js` is accessed directly from `hellodolphin.jsp` from https://bintray.com/opendolphin/resources/opendolphin/view#files[bintray].
 
 To keep things this demo uses a JSP since that is supported by Jetty out of the box.
 You could also use a simple html file if you replace the values in `webapp/js/app/api.js.jsp` with
