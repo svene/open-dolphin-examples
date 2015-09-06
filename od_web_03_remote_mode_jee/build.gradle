@@ -13,7 +13,8 @@ subprojects {
 		mavenLocal()
 	}
 	dependencies {
-		compile 'org.open-dolphin:dolphin-server:0.11-SNAPSHOT'
+		compile 'org.open-dolphin:dolphin-server:1.0-RC1'
+//		compile 'org.open-dolphin:dolphin-server:0.11-SNAPSHOT'
 		providedCompile 'javax:javaee-api:7.0'
 		testCompile 'junit:junit:4.11'
 	}
