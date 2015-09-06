@@ -1,3 +1,4 @@
+rootProject.name = 'ODSimpleJS'
 
 includeFrom 'shared', '../shared'
 includeFrom 'server', '../server'

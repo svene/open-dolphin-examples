@@ -10,12 +10,7 @@
 
     <title>Hello Dolphin</title>
 
-    <!-- Reference opendolphin.js: see build.gradle on how js artifacts are downloaded -->
-    <script type="text/javascript" src="generated/js/dolphin/opendolphin-0.12.0B2.js"></script>
-    <!-- Alternative using a direct reference to bintray. I am not sure if this is a good idea bc. bintray is not intended to be a CDN and possible CORS issues:
-    <script type="text/javascript" src="http://dl.bintray.com/opendolphin/resources/opendolphin-0.12.0B2.js"></script>
-    -->
-
+    <script type="text/javascript" src="http://dl.bintray.com/opendolphin/resources/opendolphin-1.0-RC2B3.js"></script>
     <script type="text/javascript" src="js/app/api.js.jsp"></script>
 
     
@@ -65,7 +60,7 @@
 
 
         // Get PMs and attributes:
-        var dolphin = opendolphin.dolphin(odConfig.DOLPHIN_URL, true);
+        var dolphin =  opendolphin.makeDolphin().url(odConfig.DOLPHIN_URL).reset(true).supportCORS(true).build();
 
         dolphin.send(ODAPI.COMMAND_INIT, {
             onFinished: function(pms) {
