@@ -10,8 +10,8 @@
 
     <title>Hello Dolphin</title>
 
-    <!-- Reference to opendolphin.js contained in webjar (see dependency in build.gradle: compile 'org.open-dolphin:client-javascript:0.12.0B2') -->
-    <script type="text/javascript" src="webjars/org/opendolphin/0.12.0B2/opendolphin.js"></script>
+    <!-- Reference to opendolphin.js contained in webjar (see dependency in build.gradle) -->
+    <script type="text/javascript" src="webjars/org/opendolphin/1.0-RC2B3/opendolphin.js"></script>
 
     <script type="text/javascript" src="js/app/api.js.jsp"></script>
 

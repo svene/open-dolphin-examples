@@ -13,8 +13,8 @@ Therefore only the modules _server_, _shared_ and _webapp_ are needed.
 
 == opendolphin.js as artifact
 
-`opendolphin.js` is used via webjar (see dependency in build.gradle: `compile 'org.open-dolphin:client-javascript:0.12.0B2'`)
-This way javascript resources can be used from our gradle build process
+`opendolphin.js` is used via webjar (see dependency in build.gradle: `compile 'org.open-dolphin:client-javascript:1.0-RC2B3'`)
+This way javascript resources can be used from the gradle build process
 just like mavenrepository artifacts (usually jar files).
 And this also means that we do not have to pollute our source repositories anymore with these artifacts.
 
@@ -22,14 +22,14 @@ From HTML you refer to `opendolphin.js` like this:
 
 [source,html]
 ----
-<script type="text/javascript" src="webjars/org/opendolphin/0.12.0B2/opendolphin.js"></script>
+<script type="text/javascript" src="webjars/org/opendolphin1.0-RC2B3/opendolphin.js"></script>
 ----
 
 BTW: bootstrap is used via webjar as well.
 
 == Additional Info
 
-To keep things simple a JSP is used since that is supported by Jetty out of the box.
+To keep things this demo uses a JSP since that is supported by Jetty out of the box.
 You could also use a simple html file if you replace the values in `webapp/js/app/api.js.jsp` with
 the appropriate values.
 
