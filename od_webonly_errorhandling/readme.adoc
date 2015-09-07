@@ -13,13 +13,18 @@ IntelliJ IDEA: open webapp/build.gradle
 * Now enter _tryboom_ into the textfield, click the _Greet_ button which should result into the message: _Exception caught: boom_
 
 Note that an exception has been thrown during the Action's execution but also caught by the Action.
-Therefore the application continues to work as expected.
 Now we will cause the Action to throw an exception without catching it.
 
 * Enter _boom_ into the textfield, click the _Greet_ button. A dialog will appear which says _Could not fetch /appContext/dolphin/, kind: application, httpStatus: 500_
 
-Note that at this point in time the application is broken.
-
+[NOTE]
+It is better to handle exceptions in the actions and not let them pass through
+because then you are able to handle these errors in the application.
+You could for example set an errormessage attribute to some values
+so that the client is able to display it just as any other value.
+This means that an error or an exception is not exceptional anymore at this level but treated as any other
+value change.
+If you let them pass instead (which will show the dialog box) the applcation is not under control of the error anymore.
 
 == How it works
 
@@ -45,7 +50,6 @@ var dolphin = opendolphin.makeDolphin()
 In the action we check the value of the _name_ attribute.
 When it is _tryboom_ an exception is thrown in _checkName()_ (in a real application this routine is in a deep nested place) but caught by the action.
 When it is just _boom_ an exception is thrown but not caught by the action.
-In the first case the application continues to work in the second it is broken.
 
 [source,java]
 .ApplicationAction

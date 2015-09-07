@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="webjars/bootstrap/3.3.1/css/bootstrap-theme.min.css">
 
     <title>Hello Dolphin</title>
-    <!-- see build.gradle on how js artifacts are downloaded -->
-    <script type="text/javascript" src="js/lib/opendolphin.js"></script>
+    <!-- Reference to opendolphin.js contained in webjar (see dependency in build.gradle) -->
+    <script type="text/javascript" src="webjars/org/opendolphin/1.0-RC2B3/opendolphin.js"></script>
     <script type="text/javascript" src="js/app/api.js.jsp"></script>
 
     
@@ -67,7 +67,6 @@
                 + ",\nmessage: " + evt.message
                 + "\n\nReloading page"
             );
-//            window.location.reload();
         };
 
         var dolphin = opendolphin.makeDolphin()
