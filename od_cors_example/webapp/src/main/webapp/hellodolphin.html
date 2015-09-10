@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="http://localhost:8080/appContext/webjars/bootstrap/3.3.1/css/bootstrap-theme.min.css">
 
     <title>Hello Dolphin</title>
-    <!-- see build.gradle on how js artifacts are downloaded -->
-    <script type="text/javascript" src="http://localhost:8080/appContext/generated/js/dolphin/opendolphin.js"></script>
+    <!-- Reference to opendolphin.js contained in webjar (see dependency in build.gradle) -->
+    <script type="text/javascript" src="http://localhost:8080/appContext/webjars/org/opendolphin/1.0-RC2B3/opendolphin.js"></script>
     <script type="text/javascript" src="http://localhost:8080/appContext/js/app/api.js.jsp"></script>
 
 
@@ -62,8 +62,8 @@
         }
 
 
-        // Get PMs and attributes:
-        var dolphin = opendolphin.dolphin(odConfig.DOLPHIN_URL, true);
+        // Initialize dolphin:
+        var dolphin = opendolphin.makeDolphin().url(odConfig.DOLPHIN_URL).reset(true).supportCORS(false).build();
 
         dolphin.send(ODAPI.COMMAND_INIT, {
             onFinished: function(pms) {

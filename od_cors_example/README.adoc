@@ -13,34 +13,39 @@ which will start the server at: `http://localhost:8080/appContext`
 
 This is how we usually operate OpenDolphin webapps: serve the html resource from the same server the functionality is running on.
 
-* Point your browser to: http://localhost:8080/appContext/sameorigin.html
+* Point your browser to: http://localhost:8080/appContext/hellodolphin.html
 
 This will show the _Hello world_ example you might know from the https://github.com/canoo/open-dolphin-lazybones-templates[OpenDolphin Lazybones Templates]
 and everything works as expected.
 
 === CORS mode
 
-When you open _sameorigin.html_ as *local file*:
+When you open _hellodolphin.html_ as *local file*:
 
-file:///<LOCAL-PATH-TO-MY-GITHUB>/open-dolphin-examples/od_cors_example/webapp/src/main/webapp/sameorigin.html
+file:///<LOCAL-PATH-TO-MY-GITHUB>/open-dolphin-examples/od_cors_example/webapp/src/main/webapp/hellodolphin.html
 
-the page *does not work* as expected and if you inspect the network requests in your browser's developer tools you can see that
-it sends a request header value *`null` for `origin`*.
+the page *does not work* as expected.
+If you open your browser's developer tools and inspect the request headers of the request http://localhost:8080/appContext/dolphin/
+you can see that it sends a request header value *`null` for `origin`*.
 This already is a CORS request and `null` is used as _origin_ by the browser because the request is issued from a local file.
+
+Now open _hellodolphin.html_ in your IDE or an editor, search for *supportCORS(* and change it's argument from *false* to *true*.
+When you reload the page in the browser it should work as expected.
 
 === Separate Client
 
 Say you would like to run your HTML client separate from the server.
 
-A reasons for this could be to be able to strictly separate the business functionality from the client.
+A reason for this could be to be able to strictly separate the business functionality from the client.
 Think of the business functionality of a public API.
 For this API all kinds of clients could be written which run against this API.
 Most likely one does not want to integrate all these clients in the same project as the server API.
 
-To simulate this when you open the file `standalone_client/sameorigin.html` through IntelliJ IDEA
-it will be served through it's own webserver IntelliJ is creating for us:
+To simulate this open the file `standalone_client/hellodolphhin.html` in IntelliJ IDEA and then click on
+one of the browser icons which appear in the top right corner of the editor.
+Now it will open in your browser and will be served through IDEAS's own webserver:
 
-http://localhost:63342/od_cors_example/standalone_client/sameorigin.html
+http://localhost:63342/od_cors_example/standalone_client/hellodolphhin.html
 
 (The port might be different on your machine)
 
@@ -49,22 +54,35 @@ Alternatively you can create a simple python webserver like this: `python -m Sim
 As you will see the page still does not work as _localhost:63342_ is different from _localhost:8080_ and therefore violates the
 Same Origin Principle (SOP).
 
-Now point your browser to `http://localhost:63342/od_cors_example/standalone_client/sc_cors.html` and you will see that it works
-because it is CORS enabled.
+Now search for _supportCORS(_ in `standalone_client/hellodolphin.html` and change it's argument from _false_ to _true_.
+When you reload the page in the browser it should work as expected.
 
-Let's see how this can be done.
+==== opendolphin.js on the client
 
-==== Enable CORS
+For the sake of completeness `standalone_client/hellodolphin_clientside_dolphinjs.html` contains the same _Hello Dolphin_ example but
+reads `opendolphin.js` from the client side and not from the serverside.
 
-When you compare `standalone_client/sameorigin.html` against `standalone_client/sc_cors.html`
-you see that the only difference are two additional parameters (...300, true) for the opendolphin creation:
-----
-var dolphin = opendolphin.dolphin(odConfig.DOLPHIN_URL, true, 300, true);
-----
+[NOTE]
+To keep this example simple _opendolphin-VERSION.js_ is stored in the filesystem and under version control
+but you could imagine to be fetched by _bower_ or another tool.
 
-The important one is the last _true_ which enables CORS support in opendolphinJS.
+When you open this file in the browser it should work after you set the __supportCORS(_ flag to _true_ as
+in the previous examples.
 
-Then you have to enable CORS on the server. In `web.xml` you have to add the CORS servlet filter:
+[NOTE]
+I think in general it is a better idea to serve `opendolphin.js` from the serverside because then the
+serverteam can make sure that the versions of opendolphin.js match the version of the server implementation
+of OpenDolphin.
+But there might be exceptional situations for which you want to use a special version of opendolphin.js
+
+=== Enable CORS on the server
+
+Enabling CORS on the client side is not enough.
+You need to do it on the server side as well.
+This demo application already contains the necessary modifications which need to be done on the server side.
+If you want to make these changes for your application's server side as well the following sections describe how you can do it.
+
+In `web.xml` you have to add the CORS servlet filter (part of this Demo and not included in OpenDolphin):
 
 [source,xml]
 ----
@@ -85,11 +103,8 @@ Then you have to enable CORS on the server. In `web.xml` you have to add the COR
 
 Note that you have to configure the *origin whitelist* as parameter of the servlet filter.
 This list must contain the *URLs for the client applications* which want to use the server.
-It also contains _null_ such that also local files work: if you open `sc_cors.html` as file the page is working as expected.
+It also contains _null_ such that also local files work: if you open `hellodolphin.html` as file the page is working as expected.
 
-Inspect the request and response headers in your browser's development tools to gain a deeper insight in the CORS communication.
-
-The last example is _sc_cors_clientside_dolphinjs.html_ which is the same as _sc_corse.html_ but uses _opendolphin.js_ from itself (the client server)
-and not from the API server.
-
+Inspect the request and response headers to in your browser's development tools for the request of the request http://localhost:8080/appContext/dolphin/
+to gain a deeper insight in the CORS communication.
 
