@@ -1,0 +1,8 @@
+{
+    "name":  "od_jsclient_bower",
+    "version": "0.0.1",
+    "dependencies": {
+        "open-dolphin-js": "0.0.1"
+    }
+}
+

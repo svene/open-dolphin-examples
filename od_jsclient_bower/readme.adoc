@@ -1,0 +1,13 @@
+= Usage
+
+* invoke `bower install` which should give you a new folder `bower_components` with a subfolder `open-dolphin-js`
+* Check out `https://github.com/svene/open-dolphin-examples/tree/master/od_cors_example` and started as described in it's usage instructions.
+This will start up the server part of the application.
+* Open the file `hellodolphin.html` which will show the familiar greeting GUI. It should work as expected.
+
+= Remarks
+
+* Note that in `hellodolphin.html` the dolphin is initialized with CORS support (`.supportCORS(true)`) so that we can use the server
+part from our local file.
+
+
