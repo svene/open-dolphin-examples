@@ -5,7 +5,6 @@
 // get values from server as javascript values, so that they can be used in client side javascript:
 readDolphinConfig = function() {
 	return {
-		DOLPHIN_URL: "<%=application.getContextPath()%>/dolphin/",
 		ODAPI: {
 			PM_ID: "<%=ApplicationConstants.PM_APP%>",
 			ATT_NAME: "<%=ApplicationConstants.ATT_NAME%>",
@@ -15,4 +14,12 @@ readDolphinConfig = function() {
 		}
 	}
 };
+
+newDolphinBuilder = function() {
+	return opendolphin.makeDolphin()
+		.url("<%=application.getContextPath()%>/dolphin/")
+		.reset(true)
+		;
+};
+
 
