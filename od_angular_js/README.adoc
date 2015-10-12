@@ -16,6 +16,6 @@ a webjar from https://bintray.com/opendolphin/mavenrepo/open-dolphin-ng/view[bin
 You can verify that the JSP is referring to the webjar and not to a locally installed version of _open-dolphin-ng_
 by opening up your browser's development tools and inspect the network activity. You should find a GET request to
 
-http://localhost:8080/appContext/webjars/org/opendolphin/0.12.0B1/opendolphin-ng.js
+http://localhost:8080/appContext/webjars/org/opendolphin/<VERSION>/opendolphin-ng.js
 
-`opendolphin-ng.js` is contained inside `open-dolphin-ng-0.12.B1.jar` which is defined as dependency in `webapp/build.gradle`.
+`opendolphin-ng.js` is contained inside `open-dolphin-ng-<VERSION>.jar` which is defined as dependency in `webapp/build.gradle`.
